@@ -22,7 +22,10 @@
                     $Sdt = $_POST['Sdt'];
                     $Email = $_POST['Email'];
                     $Dia_Chi = $_POST['Dia_Chi'];
-                    if(!empty($_FILES['Image']['name'])){
+                    if(isset($_FILES['Image']['name']) && !empty($_FILES['Image']['name'])){
+                        $check = $this->Model->fetchOne("select * from info_user where id=$id"); 
+                        file_exists("../public/Upload/Avatar/".$check['Anh']) ? unlink("../public/Upload/Avatar/".$check['Anh']) : '';
+
                         $Image = time().$_FILES['Image']['name'];
                         move_uploaded_file($_FILES['Image']['tmp_name'],"../public/Upload/Avatar/".time().$_FILES['Image']['name']);
 
