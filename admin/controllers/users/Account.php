@@ -12,7 +12,7 @@
                     $UserName = isset($_POST['UserName']) ? $_POST['UserName'] : '';
                     $Password = isset($_POST['Password']) ? $_POST['Password'] : '';
                     $re_Password = isset($_POST['re_Password']) ? $_POST['re_Password'] : '';
-                    $Level = isset($_POST['Level']) ? $_POST['Level'] : '';
+                    $id_positon = isset($_POST['id_positon']) ? $_POST['id_positon'] : '';
                     $check = $this->Model->fetchOne("select * from user where UserName='$UserName'");
 
                     if(isset($check)){
@@ -21,8 +21,7 @@
                         if($_POST['Password'] != $_POST['re_Password']){
                             $thong_bao = "Mật khẩu không khớp!";
                         }else{          
-                            $this->Model->execute("insert into user(UserName,Password,Level) values ('$UserName', '$Password','$Level')");
-                            $this->Model->execute("insert into info_user(id,Ho_Ten,Gioi_Tinh,Sdt,Email,Dia_Chi,Anh) values ('','','','','','','')");
+                            $this->Model->execute("insert into user(id,UserName,Password,id_positon) values ('','$UserName', '$Password','$id_positon')");
                             echo "<meta http-equiv='refresh' content='0; URL=index.php?ctrl=users/Account'>";
                         }
                     }
@@ -30,7 +29,6 @@
                     break;
                 case 'delete':
                     $this->Model->execute("delete from user where id=$id");
-                    $this->Model->execute("delete from info_user where id=$id");
                     echo "<meta http-equiv='refresh' content='0; URL=index.php?ctrl=users/Account'>";
                     break;
                 case 'edit':
@@ -39,8 +37,8 @@
                 case 'do_edit':
                     $UserName = $_POST['UserName'];
                     $Password = md5($_POST['Password']);
-                    $Level = $_POST['Level'];
-                    $this->Model->execute("update user set UserName = '$UserName',Password='$Password',Level = '$Level' where id='$id'");
+                    $id_positon = $_POST['id_positon'];
+                    $this->Model->execute("update user set UserName = '$UserName',Password='$Password',id_positon = '$id_positon' where id='$id'");
                     echo "<meta http-equiv='refresh' content='0; URL=index.php?ctrl=users/Account'>";
                     break;
             }

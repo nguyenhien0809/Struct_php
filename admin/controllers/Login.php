@@ -14,8 +14,8 @@
                     if($check['Password'] == MD5($password)){
                         
 
-                        if($check['Level'] == 0){
-                            $thong_tin = $this->Model->fetchOne("select * from info_user where id='".$check['id']."'");
+                        if($check['id_positon'] == 1){
+                            $thong_tin = $this->Model->fetchOne("select * from info_user where id_User='".$check['id']."'");
                             
                             $_SESSION['account'] = $Username;
                             $_SESSION['name'] = $thong_tin['Ho_Ten'];

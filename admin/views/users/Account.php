@@ -36,7 +36,7 @@
                         <td style="text-align:center;"><?php echo $stt ?></td>
                         <td><?php echo $value['UserName'] ?></td>
                         <td><?php echo $value['Password'] ?></td>
-                        <td><?php echo $value['Level'] ?></td>
+                        <td><?php echo $value['id_positon'] ?></td>
                         <td>
                             <a href="index.php?ctrl=users/Info&act=info&id=<?php echo $value['id'] ?>" class="btn btn-sm btn-primary">Thông tin</a>
                         </td>
@@ -63,9 +63,9 @@
                     <form action="index.php?ctrl=users/Account&act=do_edit&id=<?php echo $record['id'] ?>" method="post">
                         <input type="text" minlength="6" name="UserName" value="<?php echo $record['UserName'] ?>" require pattern="[a-z]{5-15}]" class="form-control">
                         <input type="text" minlength="6" name="Password" value="<?php echo $record['Password'] ?>" require pattern="[a-z]{5-15}]" class="form-control" style="margin-top:10px;">
-                        <select name="Level" class="form-control" style="margin-top:10px;">
+                        <select name="id_positon" class="form-control" style="margin-top:10px;">
                             <?php foreach ($user_position as  $val) { ?>
-                                <option value="<?php echo $val['Level'] ?>" <?php echo $val['Level'] == $record['Level'] ? ' selected="selected"': '' ?> ><?php echo $val['Ghi_Chu'] ?></option>
+                                <option value="<?php echo $val['id'] ?>" <?php echo $val['id'] == $record['id_positon'] ? ' selected="selected"': '' ?> ><?php echo $val['Ghi_Chu'] ?></option>
                             <?php } ?>
                         </select>
                         <input type="submit" value="Sửa" class="btn btn-primary" style="margin-top:10px;">                        
@@ -85,9 +85,9 @@
                     <input type="text" minlength="6" name="UserName" placeholder="Tên tài khoản" require pattern="[a-z]{5-15}" id="UserName" class="form-control">
                     <input type="password" minlength="6" name="Password" placeholder="Mật khẩu" require pattern="[a-z]{5-15}" id="Password" class="form-control" style="margin-top:10px;">
                     <input type="password" minlength="6" name="re_Password" placeholder="Nhập lại mật khẩu" require pattern="[a-z]{5-15}" id="re_Password" class="form-control" style="margin-top:10px;">
-                    <select name="Level" class="form-control" style="margin-top:10px;">
-                        <?php foreach ($user_position as  $val) { ?>
-                            <option value="<?php echo $val['Level'] ?>"><?php echo $val['Ghi_Chu'] ?></option>
+                    <select name="id_positon" class="form-control" style="margin-top:10px;">
+                        <?php foreach ($user_position as  $vall) { ?>
+                            <option value="<?php echo $vall['id'] ?>"><?php echo $vall['Ghi_Chu'] ?></option>
                         <?php } ?>
                     </select>
                     <input type="submit" id="Them" value="Thêm" disabled class="btn btn-primary" style="margin-top:10px;">

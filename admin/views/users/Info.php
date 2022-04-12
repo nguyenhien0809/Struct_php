@@ -14,17 +14,19 @@
 
 <div class="row">
 <?php if (!isset($_GET['act']) || $_GET['act']!="info") { ?>
-    <div class="col-md-10">
+    <div class="col-md">
     
         <div class="panel panel-primary">
                 <div class="panel-heading">Thông tin tài khoản</div>
                 <Div class="panel-body">
                     <table class="table table-bordered table-hover">
                         <tr>
+                        <td width="40px">STT</td>
                             <td width="40px">Ảnh</td>
                             <td width="40px">Tên tài khoản</td>
                             <td>Họ và tên</td>
                             <td>Giới tính</td>
+                            <td>Ngày Sinh</td>
                             <td>Số ĐT</td>
                             <td>Email</td>
                             <td>Địa chỉ</td>
@@ -34,13 +36,15 @@
                             $stt=0;
                             foreach ($data as $value) { 
                                 $stt++;
-                                $record = $this->Model->fetchOne("select * from info_user where id='".$value['id']."'");
+                                $record = $this->Model->fetchOne("select * from info_user where id_user='".$value['id']."'");
                         ?>
                         <tr>
+                            <td width="40px"><?php echo $stt ?></td>
                             <td><img src="../public/Upload/Avatar/<?php echo $record['Anh'] ?>" alt="avt" width="100px"></td>
                             <td><?php echo $value['UserName'] ?></td>
                             <td><?php echo $record['Ho_Ten'] ?></td>
-                            <td><?php echo $record['Gioi_Tinh']==0? 'Nam' : ($record['Gioi_Tinh']==0? 'Nữ' : 'Khác') ?></td>
+                            <td><?php echo $record['Gioi_Tinh']==0? 'Nam' : ($record['Gioi_Tinh']==1? 'Nữ' : 'Khác') ?></td>
+                            <td><?php echo $record['Nam_Sinh'] ?></td>
                             <td><?php echo $record['Sdt'] ?></td>
                             <td><?php echo $record['Email'] ?></td>
                             <td><?php echo $record['Dia_Chi'] ?></td>
@@ -66,6 +70,7 @@
                             <td width="40px">Tên tài khoản</td>
                             <td>Họ và tên</td>
                             <td>Giới tính</td>
+                            <td>Ngày Sinh</td>
                             <td>Số ĐT</td>
                             <td>Email</td>
                             <td>Địa chỉ</td>
@@ -75,12 +80,13 @@
                             <td><img src="../public/Upload/Avatar/<?php echo $info['Anh'] ?>" alt="avt" width="100px"></td>
                             <td><?php echo $UserN['UserName'] ?></td>
                             <td><?php echo $info['Ho_Ten'] ?></td>
-                            <td><?php echo $info['Gioi_Tinh']==0? 'Nam' : ($info['Gioi_Tinh']==0? 'Nữ' : 'Khác') ?></td>
+                            <td><?php echo $info['Gioi_Tinh']==0? 'Nam' : ($info['Gioi_Tinh']==1? 'Nữ' : 'Khác') ?></td>
+                            <td><?php echo $info['Nam_Sinh'] ?></td>
                             <td><?php echo $info['Sdt'] ?></td>
                             <td><?php echo $info['Email'] ?></td>
                             <td><?php echo $info['Dia_Chi'] ?></td>
                             <td>
-                                <a href="index.php?ctrl=users/Info&act=edit&id=<?php echo $info['id'] ?>" class="btn btn-success btn-sm">Sửa</a>
+                                <a href="index.php?ctrl=users/Info&act=edit&id=<?php echo $info['id_User'] ?>" class="btn btn-success btn-sm">Sửa</a>
                             </td>
                         </tr>
                     </table>
@@ -89,19 +95,21 @@
         </div>
     <?php } ?>
     
-    <!-- add Account -->
+    <!-- edit Account -->
     <div class="col-md-4">
         <?php if (isset($_GET['act']) && $_GET['act']=="edit") { ?>
             <div class="panel panel-primary">
                 <div class="panel-heading">Sửa thông tin tài khoản</div>
                 <div class="panel-body">
-                    <form action="index.php?ctrl=users/Info&act=do_edit&id=<?php echo $recordd['id'] ?>" method="post" enctype="multipart/form-data">
+                    <form action="index.php?ctrl=users/Info&act=do_edit&id=<?php echo $recordd['id_User'] ?>" method="post" enctype="multipart/form-data">
                         <img src="../public/Upload/Avatar/<?php echo $recordd['Anh'] ?>" alt="avt" id="output" class="output" width="150px">
                         <input type="file" name="Image" accept="image/*" onchange="loadFile(event)">
                         <span>Tên đăng nhập:</span>
                         <input type="text" name="UserName" value="<?php echo $UserN['UserName'] ?>" placeholder="Tên đăng nhập" readonly class="form-control" style="margin-bottom:10px;">
                         <span>Họ và tên:</span>
                         <input type="text" name="Ho_Ten" value="<?php echo $recordd['Ho_Ten'] ?>" placeholder="Họ và Tên" require class="form-control" style="margin-bottom:10px;">
+                        <span>Ngày Sinh</span>
+                        <input type="date" name="Ngay_Sinh" value="<?php echo $recordd['Nam_Sinh'] ?>" require class="form-control" style="margin-bottom:10px;">
                         <!--  -->
                         <span>Giới tính:</span>
                         <select name="GioiTinh" class="form-control" style="margin-bottom:10px;">

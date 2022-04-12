@@ -91,9 +91,6 @@
                             <li>
                                 <a href="#">Danh sách</a>
                             </li>
-                            <li>
-                                <a href="#">Kho</a>
-                            </li>
                         </ul>
                     </li>
                     <li>
@@ -117,13 +114,21 @@
                                 <a href="index.php?ctrl=users/Position">Chức vụ</a>
                             </li>
                             <li>
-                                <a href="index.php?ctrl=users/Add">Thêm</a>
-                            </li>
-                            <li>
                                 <a href="index.php?ctrl=users/Account">Danh sách</a>
                             </li>
                             <li>
                                 <a href="index.php?ctrl=users/Info">Thông tin tài khoản</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:0;" data-toggle="collapse" data-target="#kho"><i class="fa fa-database"></i> Kho <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="kho" class="collapse">
+                            <li>
+                                <a href="index.php?ctrl=warehouse/Add">Nhập</a>
+                            </li>
+                            <li>
+                                <a href="index.php?ctrl=warehouse/History">Lịch sử</a>
                             </li>
                         </ul>
                     </li>
