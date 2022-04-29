@@ -6,7 +6,6 @@
             $act = isset($_GET['act']) ? $_GET['act'] : "";
             $id = isset($_GET['id']) ? $_GET['id'] : 0;  
             $thong_bao = "";          
-  
             switch ($act) {
                 case 'info':
                     $info = $this->Model->fetchOne("select * from info_user where id_User=$id"); 
@@ -14,7 +13,8 @@
                     break;
                 case 'edit':
                     $recordd = $this->Model->fetchOne("select * from info_user where id_User=$id"); 
-                    $UserN = $this->Model->fetchOne("select * from user where id=$id");                           
+                    $UserN = $this->Model->fetchOne("select * from user where id=$id");      
+                    $data = $this->Model->fetch("SELECT * from info_user order by id_User desc limit 25");                     
                     break;
                 case 'do_edit':
                     $Ho_Ten = $_POST['Ho_Ten'];
@@ -39,9 +39,21 @@
 
                     echo "<meta http-equiv='refresh' content='0; URL=index.php?ctrl=users/Info'>";
                     break;
+
+                case 'search':
+                    $sr = isset($_POST['search']) ? $_POST['search'] : "";
+                    $data = $this->Model->fetch("select * from info_user where Ho_Ten like '%$sr%'  OR Sdt like '%$sr%' OR Email like '%$sr%' OR Dia_Chi like '%$sr%' order by id desc limit 25");
+                    break;
+                case 'select':
+                    $sl = isset($_GET['sl']) ? $_GET['sl'] : "";
+                    $data = $this->Model->fetch("select * from info_user order by id desc limit $sl");
+                    break;  
+                default:
+                    $data = $this->Model->fetch("SELECT * from info_user order by id_User desc limit 25");
+                break;
             }
             
-            $data = $this->Model->fetch("select * from user");
+            //$data = $this->Model->fetch("select * from info_user order by id desc limit 25");
             
             include "views/users/Info.php";
         }

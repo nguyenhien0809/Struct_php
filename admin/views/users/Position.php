@@ -13,7 +13,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-xs-8">
     
         <div class="panel panel-primary">
             <div class="panel-heading">Danh sách chức vụ</div>
@@ -47,7 +47,7 @@
 
     </div>
     <!-- add Position -->
-    <div class="col-md-4">
+    <div class="col-xs-4">
 
         <?php if (isset($_GET['act']) && $_GET['act']=="edit") { ?>
             <div class="panel panel-primary">

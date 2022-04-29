@@ -23,6 +23,9 @@
 
     <!-- Custom Fonts -->
     <link href="../public/admin/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -86,10 +89,13 @@
                         <a href="javascript:0;" data-toggle="collapse" data-target="#sp"><i class="fa fa-ellipsis-h"></i> Sản phẩm <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="sp" class="collapse">
                             <li>
-                                <a href="#">Thêm sản phẩm</a>
+                                <a href="index.php?ctrl=products/Add">Thêm sản phẩm</a>
                             </li>
                             <li>
-                                <a href="#">Danh sách</a>
+                                <a href="index.php?ctrl=products/Info">Thông tin sản phẩm</a>
+                            </li>
+                            <li>
+                                <a href="index.php?ctrl=products/Product">Danh sách</a>
                             </li>
                         </ul>
                     </li>
@@ -97,13 +103,13 @@
                         <a href="javascript:0;" data-toggle="collapse" data-target="#cart"><i class="fa fa-shopping-cart"></i> Giỏ hàng <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="cart" class="collapse">
                             <li>
-                                <a href="#">Danh sách đơn hàng</a>
+                                <a href="index.php?ctrl=oder/Oder">Danh sách đơn hàng</a>
                             </li>
                             <li>
-                                <a href="#">Đơn hàng chưa thanh toán</a>
+                                <a href="index.php?ctrl=oder/Unpaid">Đơn hàng chưa thanh toán</a>
                             </li>
                             <li>
-                                <a href="#">Đơn hàng bị trả lại</a>
+                                <a href="index.php?ctrl=oder/GiveBack">Đơn hàng bị trả lại</a>
                             </li>
                         </ul>
                     </li>
@@ -131,6 +137,9 @@
                                 <a href="index.php?ctrl=warehouse/History">Lịch sử</a>
                             </li>
                         </ul>
+                    </li>
+                    <li>
+                        <a href="index.php?ctrl=slider/Slider"><i class="fa fa-fw fa-sliders"></i>Slider</a>
                     </li>
                     <li>
                         <a href="bootstrap-elements.html"><i class="fa fa-fw fa-phone"></i>Liên hệ</a>

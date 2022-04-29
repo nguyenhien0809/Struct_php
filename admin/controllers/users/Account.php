@@ -32,7 +32,8 @@
                     echo "<meta http-equiv='refresh' content='0; URL=index.php?ctrl=users/Account'>";
                     break;
                 case 'edit':
-                    $record = $this->Model->fetchOne("select * from user where id=$id");                           
+                    $record = $this->Model->fetchOne("select * from user where id=$id");      
+                    $data = $this->Model->fetch("SELECT * from user order by id desc limit 25");                     
                     break;
                 case 'do_edit':
                     $UserName = $_POST['UserName'];
@@ -41,9 +42,20 @@
                     $this->Model->execute("update user set UserName = '$UserName',Password='$Password',id_positon = '$id_positon' where id='$id'");
                     echo "<meta http-equiv='refresh' content='0; URL=index.php?ctrl=users/Account'>";
                     break;
+                case 'search':
+                    $sr = isset($_POST['search']) ? $_POST['search'] : "";
+                    $data = $this->Model->fetch("select * from user where UserName like '%$sr%' order by id desc limit 25");
+                    break;
+                case 'select':
+                    $sl = isset($_GET['sl']) ? $_GET['sl'] : "";
+                    $data = $this->Model->fetch("select * from user order by id desc limit $sl");
+                    break;  
+                default:
+                    $data = $this->Model->fetch("SELECT * from user order by id desc limit 25");
+                break;
             }
           
-            $data = $this->Model->fetch("select * from user");
+            //$data = $this->Model->fetch("select * from user");
             $user_position = $this->Model->fetch("select * from user_position");
             
             include "views/users/Account.php";

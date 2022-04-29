@@ -11,36 +11,36 @@
         </ol>
     </div>
 </div>
-<div class="col-md">
+<div class="col-xs">
         <div class="panel panel-primary">
-            <div class="panel-heading">Nhập hàng</div>
+            <div href="javascript:0;" class="panel-heading" >Nhập hàng</div>
             <div class="panel-body">
-                <form action="index.php?ctrl=warehouse/Add&act=add" method="post">
+                <form action="index.php?ctrl=warehouse/Add&act=add&id=<?php echo $dataOne['id'] ?>" method="post">
 
                     <span>Mã sản phẩm</span>
                     <select name="M_sp" class="form-control" onchange="location = this.value;">
                     <option value=""></option>
                         <?php foreach ($data as $value) { ?> 
-                        <option value="index.php?ctrl=warehouse/Add&ma=<?php echo $value['Ma_SP'] ?>"  <?php echo isset($_GET['ma']) ? $_GET['ma']== $value['Ma_SP'] ? 'selected="selected"' :'' : '' ?> >
-                            <?php echo $value['Ma_SP'] ?>
+                        <option 
+                        value="index.php?ctrl=warehouse/Add&act=select&id=<?php echo $value['id'] ?>"  
+                            <?php echo isset($_GET['id']) ? $_GET['id']== $value['id'] ? 'selected="selected"' :'' : '' ?> 
+                        >
+                            <?php echo $value['Ma_SP']." - ".$value['Loai'] ?>
                         </option>
                         <?php } ?>
                     </select>
-                    
-                    <span>Loại bộ nhớ</span>
-                    <select name="Dung_Luong" class="form-control">
-                        <?php foreach ($check as $valuee) { ?>
-                        <option value="<?php echo $valuee['Dung_Luong'] ?>"><?php echo $valuee['Dung_Luong'] ?></option>
-                        <input type="hidden" value="<?php echo $valuee['Ma_SP'] ?>" name="Ma_SP">
-                        <?php } ?>
-                    </select>
+
 
                     <span>Màu sắc</span>
                     <select name="Mau" class="form-control">
-                        <?php foreach ($check as $valueee) { ?>
-                        <option value="<?php echo $valueee['Mau'] ?>"><?php echo $valueee['Mau'] ?></option>
+                    <option value=""></option>
+                        <?php foreach ($d_mau_sac as $mau) { ?>
+                            <option value="<?php echo $mau['Ma_Mau'] ?>">
+                                <?php echo $mau['Ten_Mau'] ?>
+                            </option>
                         <?php } ?>
                     </select>
+                    
                     <span>Số lượng</span>
                     <input type="number" name="So_Luong" placeholder="Số lượng" require class="form-control">
                     <input type="submit" value="Thêm" class="btn btn-primary" style="margin-top:10px;">

@@ -12,7 +12,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-xs-8">
     
         <div class="panel panel-primary">
             <div class="panel-heading">Danh sách thương hiệu</div>
@@ -34,8 +34,8 @@
                         <td><?php echo $value['Ma_TH'] ?></td>
                         <td><?php echo $value['Ten_TH'] ?></td>
                         <td>
-                            <a href="index.php?ctrl=categorys/trademark&act=edit&id=<?php echo $value['id'] ?>" class="btn btn-success btn-sm">Sửa</a>
-                            <a href="index.php?ctrl=categorys/trademark&act=delete&id=<?php echo $value['id'] ?>" class="btn btn-sm btn-warning">Xoá</a>
+                            <a href="index.php?ctrl=categorys/trademark&act=edit&Ma_TH=<?php echo $value['Ma_TH'] ?>" class="btn btn-success btn-sm">Sửa</a>
+                            <a href="index.php?ctrl=categorys/trademark&act=delete&Ma_TH=<?php echo $value['Ma_TH'] ?>" class="btn btn-sm btn-warning">Xoá</a>
                         </td>
                     </tr>
                     <?php } ?>
@@ -47,14 +47,14 @@
     </div>
     
     <!-- add dm -->
-    <div class="col-md-4">
+    <div class="col-xs-4">
 
         <?php if (isset($_GET['act']) && $_GET['act']=="edit") { ?>
             <div class="panel panel-primary">
                 <div class="panel-heading">Sửa danh mục</div>
                 <div class="panel-body">
-                    <form action="index.php?ctrl=categorys/trademark&act=do_edit&id=<?php echo $record['id'] ?>" method="post">
-                        <input type="text" name="Ma_TH" value="<?php echo $record['Ma_TH'] ?>" require class="form-control">
+                    <form action="index.php?ctrl=categorys/trademark&act=do_edit&Ma_TH=<?php echo $record['Ma_TH'] ?>" method="post">
+                        <input type="text" name="Ma_TH" value="<?php echo $record['Ma_TH'] ?>" readonly class="form-control">
                         <input type="text" name="Ten_TH" value="<?php echo $record['Ten_TH'] ?>" require class="form-control" style="margin-top:10px;">
                         <input type="submit" value="Sửa" class="btn btn-primary" style="margin-top:10px;">                        
                         <a  href="index.php?ctrl=categorys/trademark"  class="btn btn-primary" style="margin-top:10px;">Thoát</a>
