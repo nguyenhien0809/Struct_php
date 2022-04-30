@@ -16,10 +16,11 @@
         <div class="panel panel-primary">
             <select name="san_pham" id="" class="form-control" onchange="location = this.value;">
                 <option value=""></option>
-                <?php foreach($data as $value) ?>
+                <?php foreach($data as $value){ ?>
                 <option value="index.php?ctrl=products/Info&act=info&id=<?php echo $value['id'] ?>"  <?php echo isset($_GET['act']) && $_GET['act'] == "info" && $value['id'] == $dataOne['id'] ? 'selected="selected"' : '' ?> > 
                     <?php echo $value['Ten_SP']."-".$value['Loai'] ?> 
                 </option>
+                <?php } ?>
             </select>
         </div>
     </div>
@@ -64,6 +65,7 @@
                         <input type="number" value="<?php echo $dataOne['Gia'] ?>" name="Gia" <?php echo isset($_GET['edit']) ? '' : 'disabled="disabled"' ; ?> minlength="3" placeholder="Giá sản phẩm*" require class="form-control" style="margin-bottom:10px;">
                         
                         <span >Màu sản phẩm:</span>
+                        
                         <?php foreach($dataMau as $mausp){ ?>
                         <div class="row" style="margin-bottom:10px;">
                             <input type="hidden" name="id_Mau[]" value="<?php echo $mausp['id'] ?>" readonly>
@@ -81,6 +83,16 @@
                             </div>
                         </div>
                         <?php } ?>
+                        </br>
+                        <span>Thêm màu</span>
+                        <div class="input-group" style="margin-top:10px;">
+                            <input type="number" class="form-control" id="nb_mau" placeholder="Số màu" <?php echo isset($_GET['edit']) ? '' : 'disabled="disabled"' ; ?>>
+                            <div class="input-group-btn">
+                            <a class="btn btn-default" onclick="myFunction()">
+                                <i class="fa fa-repeat"></i>
+                            </a>
+                            </div>
+                        </div>
                         
                     </div>
                     <div class="row">
@@ -195,14 +207,14 @@
                 var x = document.createElement("INPUT");
                 x.setAttribute("type", "text");
                 x.setAttribute("placeholder", "Mã màu");
-                x.setAttribute("name","Ma_Mau[]");
+                x.setAttribute("name","Ma_Mau1[]");
                 x.setAttribute("class","form-control");
                 document.getElementById("form").appendChild(x); 
 
                 var y = document.createElement("INPUT");
                 y.setAttribute("type", "text");
                 y.setAttribute("placeholder", "Tên Màu");
-                y.setAttribute("name","Ten_Mau[]");
+                y.setAttribute("name","Ten_Mau1[]");
                 y.setAttribute("class","form-control");
                 document.getElementById("form").appendChild(y); 
             }

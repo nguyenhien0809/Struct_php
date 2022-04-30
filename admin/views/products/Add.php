@@ -43,17 +43,7 @@
                         <input type="text" name="Loai" placeholder="Loại" require class="form-control" style="margin-top:10px;">
                         <textarea name="Mo_Ta" require class="form-control" style="width:100%; margin:10px 0; height:100px;" placeholder="Mô tả"></textarea>
                         <input type="number" name="Gia" minlength="3" placeholder="Giá sản phẩm*" require class="form-control" style="margin-top:10px;">
-
-                        <div class="input-group" style="margin-top:10px;">
-                            <input type="number" class="form-control" id="nb_mau" placeholder="Số màu">
-                            <div class="input-group-btn">
-                            <a class="btn btn-default" onclick="myFunction()">
-                                <i class="fa fa-repeat"></i>
-                            </a>
-                            </div>
-                        </div>
-
-                        
+  
                     </div>
                     <div class="row-6">
                         <input type="submit" value="Thêm" class="btn btn-primary form-control" style="margin-top:10px;">
@@ -70,28 +60,6 @@
             output.src = URL.createObjectURL(event.target.files[0]);
         };   
         
-        function myFunction() {
-            for(var i = 0; i < document.getElementById("nb_mau").value; i++){
-
-                var a = document.createElement("SPAN");
-                var t = document.createTextNode("Màu "+ i);
-                a.appendChild(t);
-                document.getElementById("form").appendChild(a);
-
-                var x = document.createElement("INPUT");
-                x.setAttribute("type", "text");
-                x.setAttribute("placeholder", "Mã màu");
-                x.setAttribute("name","Ma_Mau[]");
-                x.setAttribute("class","form-control");
-                document.getElementById("form").appendChild(x); 
-
-                var y = document.createElement("INPUT");
-                y.setAttribute("type", "text");
-                y.setAttribute("placeholder", "Tên Màu");
-                y.setAttribute("name","Ten_Mau[]");
-                y.setAttribute("class","form-control");
-                document.getElementById("form").appendChild(y); 
-            }
-        }
+        
     </script>
 </div>

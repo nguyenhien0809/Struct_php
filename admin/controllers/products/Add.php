@@ -27,26 +27,12 @@
                         if (!empty($check['Ma_SP']) || !empty($check['Ma_SP']) && !empty($check['Loai'])) {
                             ?> <script> window.alert("Sản phẩm đã tồn tại") </script> <?php
                         }else{
-                            try {
-                                $sql = "insert into san_pham values ('','$Ma_SP','$Ma_DM','$Ma_TH','$Ten_SP','$Loai','$Gia','$Mo_Ta','$Anh')";
-                                $this->Model->execute($sql);
-                                
-        
-                                if(isset($_POST['Ma_Mau']) && isset($_POST['Ten_Mau'])){
-                                    $Ma_Mau = $_POST['Ma_Mau'];
-                                    $Ten_Mau = $_POST['Ten_Mau'];
-        
-                                    for ($i=0; $i < count($Ma_Mau); $i++) { 
-                                        $sql_mau = "insert into ton_sp values ('','$Ma_SP','$Loai','$Ma_Mau[$i]','$Ten_Mau[$i]',0)";
-                                        $this->Model->execute($sql_mau);
-        
-                                    } 
-                                }
-        
-                                ?> <script> window.alert("Thêm thành công!") </script> <?php
-                            } catch (\Throwable $th) {
-                                ?> <script> window.alert("Thêm không thành công!") </script> <?php
-                            }
+                            
+                            $sql = "insert into san_pham values ('','$Ma_SP','$Ma_DM','$Ma_TH','$Ten_SP','$Loai','$Gia','$Mo_Ta','$Anh')";
+                            $this->Model->execute($sql);
+                            
+                            ?> <script> window.alert("Thêm thành công!") </script> <?php
+                            
                         }
                         
                     }

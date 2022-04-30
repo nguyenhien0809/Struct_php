@@ -26,18 +26,31 @@
                             $Mo_Ta = isset($_POST['Mo_Ta']) ? $_POST['Mo_Ta'] : "";
                             $Gia = isset($_POST['Gia']) ? $_POST['Gia'] : "";
                             
-                            $id_Mau = isset($_POST['id_Mau']) ? $_POST['id_Mau'] : "";
-                            $Ma_Mau = isset($_POST['Ma_Mau']) ? $_POST['Ma_Mau'] : "";
-                            $Ten_Mau = isset($_POST['Ten_Mau']) ? $_POST['Ten_Mau'] : "";
-                            $So_Luong = isset($_POST['So_Luong']) ? $_POST['So_Luong'] : "";
-
                             $sql = "UPDATE san_pham set Ma_SP='$Ma_SP',Ma_DM='$Ma_DM',Ma_TH='$Ma_TH',Ten_SP='$Ten_SP',Loai='$Loai',Gia='$Gia',Mo_Ta='$Mo_Ta' where id='$id'";
                             $this->Model->execute($sql);
+                            
+                            // Sửa lại màu
+                            if(isset($_POST['id_Mau'])){
+                                $id_Mau = $_POST['id_Mau'];
+                                $Ma_Mau = isset($_POST['Ma_Mau']) ? $_POST['Ma_Mau'] : "";
+                                $Ten_Mau = isset($_POST['Ten_Mau']) ? $_POST['Ten_Mau'] : "";
+                                $So_Luong = isset($_POST['So_Luong']) ? $_POST['So_Luong'] : "";
+    
+                                foreach($Ma_Mau as $keys => $names) { 
+                                    $sqlMau = "UPDATE ton_sp set Ma_Mau='$Ma_Mau[$keys]', Ten_Mau='$Ten_Mau[$keys]',So_Luong='$So_Luong[$keys]' where id_SP='$id' AND id = '$id_Mau[$keys]'";
+                                    $this->Model->execute($sqlMau);
+                                }
+                            }
 
-                            for ($i=0; $i < count($Ma_Mau); $i++) { 
-                                $sqlMau = "UPDATE ton_sp set Ma_Mau='$Ma_Mau[$i]', Loai='$Loai', Ten_Mau='$Ten_Mau[$i]',So_Luong='$So_Luong' where Ma_SP='$Ma_SP' AND id = '$id_Mau[$i]'";
-                                $this->Model->execute($sqlMau);
+                            // Thêm màu
+                            if(isset($_POST['Ma_Mau1'])){
+                                $Ma_Mau1 = $_POST['Ma_Mau1'];
+                                $Ten_Mau1 = $_POST['Ten_Mau1'];
 
+                                foreach($Ma_Mau1 as $key => $name){
+                                    echo $sqlMau1 = "INSERT into ton_sp values('','$id','$Ma_Mau1[$key]','$Ten_Mau1[$key]',0)";
+                                    $this->Model->execute($sqlMau1);
+                                }
                             }
                             ?> <script> window.alert("Cập nhật thông tin thành công") </script> <?php  
                             echo "<meta http-equiv='refresh' content='0; URL=index.php?ctrl=products/Info&act=info&id=$id&#san_p'>";
