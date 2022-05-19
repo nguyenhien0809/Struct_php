@@ -61,11 +61,16 @@
                         <input type="text" name="Loai" value="<?php echo $dataOne['Loai'] ?>" <?php echo isset($_GET['edit']) ? '' : 'disabled="disabled"' ; ?> placeholder="Loại" require class="form-control" >
                         <span>Mô tả</span>
                         <textarea name="Mo_Ta" value="" <?php echo isset($_GET['edit']) ? '' : 'disabled="disabled"' ; ?> require class="form-control" style="width:100%; height:100px;" placeholder="Mô tả"><?php echo $dataOne['Mo_Ta'] ?></textarea>
-                        <span>Gía sản phẩm*</span>
-                        <input type="number" value="<?php echo $dataOne['Gia'] ?>" name="Gia" <?php echo isset($_GET['edit']) ? '' : 'disabled="disabled"' ; ?> minlength="3" placeholder="Giá sản phẩm*" require class="form-control" style="margin-bottom:10px;">
-                        
-                        <span >Màu sản phẩm:</span>
-                        
+
+                        <div class="col-xs-6">
+                            <span>Gía sản phẩm*</span>
+                            <input type="number" value="<?php echo $sp_gia['Gia_Truoc'] ?>" name="Gia_goc" <?php echo isset($_GET['edit']) ? '' : 'disabled="disabled"' ; ?> minlength="3" placeholder="Giá sản phẩm*" require class="form-control" style="margin-bottom:10px;">
+                        </div>
+                        <div class="col-xs-6">
+                            <span>Phần trăm giảm*</span>
+                            <input type="number" value="<?php echo $sp_gia['Phan_Tram_Giam'] ?>" name="PT_sale" <?php echo isset($_GET['edit']) ? '' : 'disabled="disabled"' ; ?> minlength="3" placeholder="Giá sản phẩm*" require class="form-control" style="margin-bottom:10px;">
+                        </div>
+
                         <?php foreach($dataMau as $mausp){ ?>
                         <div class="row" style="margin-bottom:10px;">
                             <input type="hidden" name="id_Mau[]" value="<?php echo $mausp['id'] ?>" readonly>

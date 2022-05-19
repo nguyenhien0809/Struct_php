@@ -8,14 +8,14 @@
                 $Username = $_POST['Username'];
                 $password = $_POST['password'];
                 $thong_bao = "";
-                $check = $this->Model->fetchOne("select * from user where UserName='$Username'");
+                $check = $this->Model->fetchOne("select * from users where UserName='$Username'");
                 
                 if(isset($check['UserName'])){
                     if($check['Password'] == MD5($password)){
                         
 
                         if($check['id_positon'] == 1){
-                            $thong_tin = $this->Model->fetchOne("select * from info_user where id_User='".$check['id']."'");
+                            $thong_tin = $this->Model->fetchOne("select * from users_info where id_User='".$check['id']."'");
                             
                             $_SESSION['account'] = $Username;
                             $_SESSION['name'] = $thong_tin['Ho_Ten'];

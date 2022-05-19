@@ -2,13 +2,11 @@
     class Home extends Controller{
         public function __construct(){
             parent::__construct();
-            
+            $data_dm = $this->Model->fetch("select * from danh_muc");
             $data_sp_moi = $this->Model->fetch("select * from view_sp limit 10");
-            $data_noi_bat = $this->Model->fetch("select * from view_sp where Phan_Tram_Giam > 0");
-            $data_ban_chay = $this->Model->fetch("select * from sp_ban_chay limit 10");
-            $data_dt = $this->Model->fetch("select * from view_sp where Ma_DM = 'DT'");
-            $data_pk = $this->Model->fetch("select * from view_sp where Ma_DM = 'PK'");
-            $anh_sp = $this->Model->fetch("select * from anh_ct_sp");
+            $data_noi_bat = $this->Model->fetch("select * from view_sp where Sale > 0 limit 10");
+
+            $slider = $this->Model->fetch("select * from slider where Tinh_Trang = 0");
 
             include "client/views/Home.php";
         }

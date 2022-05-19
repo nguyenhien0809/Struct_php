@@ -18,7 +18,7 @@
 
             if (isset($_SESSION['account'])) {
                 $Username =$_SESSION['account'];
-                $check = $this->Model->fetchOne("select * from user where UserName='$Username'");
+                $check = $this->Model->fetchOne("select * from users where UserName='$Username'");
                 if($check['id_positon'] == 1){
                     $ctrl = isset($_GET['ctrl']) ? "controllers/".$_GET['ctrl'].".php" : "controllers/Home.php";
                     include "../layout/admin/admin.php";
@@ -28,6 +28,11 @@
             } else{
                 include "controllers/Login.php";
             }
+        }
+    }
+    function currency_format($number, $suffix = 'đ') {
+        if (!empty($number)) {
+            return number_format($number, 0, ',', '.') . "{$suffix}";
         }
     }
     new index();

@@ -48,7 +48,9 @@
                             <td>Danh mục</td>
                             <td>Thương hiệu</td>
                             <td>Loại</td>
-                            <td>Giá</td>
+                            <td>Giá gốc</td>
+                            <td>Giá sale</td>
+                            <td>Giá sau</td>
                             <td>Tồn</td>
                             <td></td>
                         </tr>
@@ -57,8 +59,9 @@
                                 $stt=0;
                                 foreach ($data as $value) { 
                                     $stt++;
-                                    $sql = "select SUM(So_Luong) as Ton from ton_sp where id_SP='".$value['id']."'";
+                                    $sql = "select SUM(So_Luong) as Ton from sp_ton where id_SP='".$value['id']."'";
                                     $dataTon = $this->Model->fetchOne($sql);
+                                    $sp_gia = $this->Model->fetchOne("select * from sp_gia where id_SP = '".$value['id']."'");
                             ?>
 
                             <tr>
@@ -70,7 +73,9 @@
                                 <td><?php echo $value['Ma_DM'] ?></td>
                                 <td><?php echo $value['Ma_TH'] ?></td>
                                 <td><?php echo $value['Loai']?></td>
-                                <td><?php echo currency_format($value['Gia']) ?></td>
+                                <td><?php echo currency_format($sp_gia['Gia_Truoc']) ?></td>
+                                <td><?php echo $sp_gia['Phan_Tram_Giam'] ?></td>
+                                <td><?php echo currency_format($sp_gia['Gia_Sau']) ?></td>
                                 <td><?php echo $dataTon['Ton'] ?></td>
                                 <td>
                                     <a href="index.php?ctrl=products/Info&act=info&id=<?php echo $value['id'] ?>" class="btn btn-success">Thông tin</a>

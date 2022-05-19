@@ -10,7 +10,8 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="public/client/image/menu/flag-icon/icon" href="public/client/images/menu/flag-icon/icon.png">
+    <link rel="shortcut icon" type="public/client/image/menu/flag-icon/icon"
+        href="public/client/images/menu/flag-icon/icon.png">
     <!-- Material Design Iconic Font-V2.2.0 -->
     <link rel="stylesheet" href="public/client/css/material-design-iconic-font.min.css">
     <!-- Font Awesome -->
@@ -65,28 +66,28 @@
                         <div class="col-lg-9 col-md-8">
                             <div class="header-top-right">
                                 <ul class="ht-menu">
-                                    <?php if(isset($_SESSION['account'])){ 
-                                        $UserName = $_SESSION['account'];
-                                        $check = $this->Model->fetchOne("select * from user where UserName = '$UserName'");
-                                        $name = $this->Model->fetchOne("select * from info_user where id_User = '".$check['id']."'");?>
-                                        <li>
-                                            <div class="ht-setting-trigger"><span><i class="fa fa-user" aria-hidden="true"></i><?php echo $name['Ho_Ten'] ?></span></div>
-                                            <div class="setting ht-setting">
-                                                <ul class="ht-setting-list">
-                                                    <li><a href="#">Tài khoản</a></li>
-                                                    <li><a href="#">Lịch sử</a></li>
-                                                    <li><a href="?act=logout">Đăng xuất</a></li>
-                                                </ul>
-                                            </div>
-                                        </li>
+                                    <?php if(isset($_SESSION['account'])){ ?>
+                                    <li>
+                                        <div class="ht-setting-trigger"><span><i class="fa fa-user"
+                                                    aria-hidden="true"></i>
+                                                <?php echo isset($_SESSION['name']) ? $_SESSION['name'] : "no name" ?>
+                                            </span></div>
+                                        <div class="setting ht-setting">
+                                            <ul class="ht-setting-list">
+                                                <li><a href="#">Tài khoản</a></li>
+                                                <li><a href="#">Lịch sử</a></li>
+                                                <li><a href="?act=logout">Đăng xuất</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
                                     <?php }else{ ?>
-                                        <li>
-                                            <a href="?ctrl=Login_register">Đăng ký</a>
-                                        </li>
+                                    <li>
+                                        <a href="?ctrl=Login_register">Đăng ký</a>
+                                    </li>
 
-                                        <li>
-                                            <a href="?ctrl=Login_register">Đăng Nhập</a>
-                                        </li>
+                                    <li>
+                                        <a href="?ctrl=Login_register">Đăng Nhập</a>
+                                    </li>
                                     <?php } ?>
                                 </ul>
                             </div>
@@ -110,9 +111,10 @@
 
                         <div class="col-lg-9 pl-0 ml-sm-15 ml-xs-15">
 
-                            <form action="#" class="hm-searchbox">
-
-                                <input type="text" placeholder="Tìm kiếm ...">
+                            <form action="?ctrl=Product_List&act=search" class="hm-searchbox" method="get">
+                                <input type="hidden" name="ctrl" value="Product_List">
+                                <input type="hidden" name="act" value="search">
+                                <input type="text" placeholder="Tìm kiếm ..." name="name">
                                 <button class="li-btn" type="submit"><i class="fa fa-search"></i></button>
                             </form>
 
@@ -121,48 +123,64 @@
                                 <ul class="hm-menu">
                                     <li class="hm-wishlist">
                                         <a href="?ctrl=Wishlist">
-                                            <span class="cart-item-count wishlist-item-count"><?php echo isset($_SESSION['yeu_thich']) ? count($_SESSION['yeu_thich']) : 0 ?></span>
+                                            <span class="cart-item-count wishlist-item-count">
+                                                <?php echo isset($_SESSION['yeu_thich']) ? count($_SESSION['yeu_thich']) : 0 ?>
+                                            </span>
                                             <i class="fa fa-heart-o"></i>
                                         </a>
                                     </li>
                                     <li class="hm-minicart">
-                                        
+
                                         <span></span>
                                         <div class="minicart">
                                             <ul class="minicart-product-list">
-                                               <?php 
+                                                <?php 
                                                if(isset($_SESSION['gio_hang']))
                                                 foreach($_SESSION['gio_hang'] as $id_sp => $sl){ 
-                                                    $data_gh = $this->Model->fetchOne("select * from view_sp where id = '$id_sp'"); ?>
-                                                    <li>
-                                                        <a href="single-product.html" class="minicart-product-image">
-                                                            <img src="public/Upload/Products/<?php echo $data_gh['Anh'] ?>" alt="cart products">
-                                                        </a>
-                                                        <div class="minicart-product-details">
-                                                            <h6><a href="single-product.html"><?php echo $data_gh['Ten_SP'] ?></a></h6>
-                                                            <span><?php echo currency_format($data_gh['Gia_Sau'])." x ".$sl ?></span>
-                                                        </div>
-                                                        <a href="?act=delete&dm=gio_hang&id=<?php echo $id_sp ?>" class="close" title="Remove">
-                                                                <i class="fa fa-close"></i>
-                                                        </a>
-                                                    </li>
-                                                        
-                                                    <?php $tong += $data_gh['Gia_Sau']*$sl; } ?>
+                                                    $data_gh = $this->Model->fetchOne("select * from view_sp where id = '$id_sp'"); 
+                                                    foreach($_SESSION['gio_hang'][$id_sp] as $id_m => $sll){ ?>
+                                                <li>
+                                                    <a href="?ctrl=Product<?php echo '&m='.$id_m.'&id='.$id_sp ?>" class="minicart-product-image">
+                                                        <img src="public/Upload/Products/<?php echo $data_gh['Anh'] ?>"
+                                                            alt="cart products">
+                                                    </a>
+                                                    <div class="minicart-product-details">
+                                                        <h6><a href="?ctrl=Product<?php echo '&m='.$id_m.'&id='.$id_sp ?>">
+                                                                <?php echo $data_gh['Ten_SP'] ?>
+                                                            </a></h6>
+                                                        <span>
+                                                            <?php echo currency_format($data_gh['Gia_Giam'])." x ".$sll ?>
+                                                        </span>
+                                                    </div>
+                                                    <a href="?act=delete&dm=gio_hang<?php echo '&m='.$id_m.'&id='.$id_sp ?>"
+                                                        class="close" title="Remove">
+                                                        <i class="fa fa-close"></i>
+                                                    </a>
+                                                </li>
+
+                                                <?php $tong += $data_gh['Gia_Giam']*$sll; } ?>
+                                                <?php } ?>
                                             </ul>
-                                            <p class="minicart-total">Tổng: <span><?php echo currency_format($tong) ?></span></p>
+                                            <p class="minicart-total">Tổng: <span>
+                                                    <?php echo currency_format($tong) ?>
+                                                </span></p>
                                             <div class="minicart-button">
-                                                <a href="?ctrl=Cart" class="li-button li-button-fullwidth li-button-dark">
+                                                <a href="?ctrl=Cart"
+                                                    class="li-button li-button-fullwidth li-button-dark">
                                                     <span>Xem giỏ hàng</span>
                                                 </a>
-                                                <a href="checkout.html" class="li-button li-button-fullwidth">
+                                                <a href="?ctrl=Checkout" class="li-button li-button-fullwidth">
                                                     <span>Thanh toán</span>
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="hm-minicart-trigger">
                                             <span class="item-icon"></span>
-                                            <span class="item-text"><?php echo currency_format($tong) ?>
-                                                    <span class="cart-item-count"><?php echo isset($_SESSION['gio_hang']) ? count($_SESSION['gio_hang']) : 0 ?></span>
+                                            <span class="item-text">
+                                                <?php echo currency_format($tong) ?>
+                                                <span class="cart-item-count">
+                                                    <?php echo isset($_SESSION['gio_hang']) ? count($_SESSION['gio_hang']) : 0 ?>
+                                                </span>
                                             </span>
                                         </div>
                                     </li>
@@ -186,10 +204,14 @@
                                     <ul>
                                         <li><a href="?">Trang chủ</a></li>
 
-                                        <li class="dropdown-holder"><a href="shop-list.html">Danh mục</a>
+                                        <li class="dropdown-holder"><a href="?ctrl=Product_List">Danh mục</a>
                                             <ul class="hb-dropdown">
-                                                <li><a href="shop-4-column.html">Điện thoại</a></li>
-                                                <li><a href="shop-4-column.html">Phụ kiện</a></li>
+                                                <?php foreach($data_dmm as $val_dm){ ?>
+                                                <li><a
+                                                        href="?ctrl=Product_List&act=sp&dm=<?php echo $val_dm['Ma_DM'] ?>">
+                                                        <?php echo $val_dm['Ten_DM'] ?>
+                                                    </a></li>
+                                                <?php } ?>
                                             </ul>
                                         </li>
                                         <li><a href="contact.html">Liên hệ</a></li>
@@ -219,6 +241,248 @@
         
         ?>
 
+        <!-- sản phẩm bán chạy -->
+        <section class="product-area  pt-60 pb-45">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div class="li-section-title">
+                            <h2>
+                                <span>Sản phẩm bán chạy</span>
+                            </h2>
+                        </div>
+
+                        <div class="row">
+                            <div class="product-active owl-carousel">
+                                <?php foreach($data_ban_chay as $val_hot) { 
+                                $check_DM = $this->Model->fetchOne("select * from danh_muc where Ma_DM = '".$val_hot['Ma_DM']."'");
+                                $data_m = $this->Model->fetchOne("select * from sp_ton where id_SP = '".$val_hot['id']."' and So_Luong > 0");?>
+                                <div class="col-lg-12">
+                                    <div class="single-product-wrap">
+                                        <div class="product-image">
+                                            <a href="?ctrl=product<?php echo '&m='.$data_m['id'].'&id='.$val_hot['id'] ?>">
+                                                <img src="public/Upload/Products/<?php echo $val_hot['Anh'] ?>"
+                                                    alt="Li's Product Image">
+                                            </a>
+                                            <span class="sticker">Hot</span>
+                                        </div>
+                                        <div class="product_desc">
+                                            <div class="product_desc_info">
+                                                <div class="product-review">
+                                                    <h5 class="manufacturer">
+                                                        <a href="?ctrl=category&id=<?php echo $val_hot['Ma_DM'] ?>">
+                                                            <?php echo $check_DM['Ten_DM'] ?>
+                                                        </a>
+                                                    </h5>
+
+                                                </div>
+                                                <h4><a class="product_name"
+                                                        href="?ctrl=product<?php echo '&m='.$data_m['id'].'&id='.$val_hot['id'] ?>">
+                                                        <?php echo $val_hot['Ten_SP'] ?>
+                                                    </a></h4>
+                                                <?php if($val_hot['Sale'] > 0){ ?>
+                                                <div class="price-box">
+                                                    <span class="new-price new-price-2">
+                                                        <?php echo currency_format($val_hot['Gia_Giam']) ?>
+                                                    </span>
+                                                    <span class="old-price">
+                                                        <?php echo currency_format($val_hot['Gia']) ?>
+                                                    </span>
+                                                    <span class="discount-percentage">-
+                                                        <?php echo $val_hot['Sale'] ?>%
+                                                    </span>
+                                                </div>
+                                                <?php } ?>
+                                                <?php if($val_hot['Sale'] == 0){ ?>
+                                                <div class="price-box">
+                                                    <span class="new-price">
+                                                        <?php echo currency_format($val_hot['Gia']) ?>
+                                                    </span>
+                                                </div>
+                                                <?php } ?>
+                                            </div>
+                                            <div class="add-actions">
+                                                <ul class="add-actions-link">
+                                                    <li class="add-cart active"><a
+                                                            href="?act=add&dm=gio_hang&dm=gio_hang<?php echo '&m='.$data_m['id'].'&id='.$val_hot['id'] ?>">Thêm
+                                                            vào giỏ</a></li>
+                                                    <li><a class="links-details"
+                                                            href="?act=add&dm=gio_hang&dm=yeu_thich&id=<?php echo $val_hot['id'] ?>"><i
+                                                                class="fa fa-heart-o"></i></a></li>
+                                                    <li><a href="#" title="quick view" class="quick-view-btn"
+                                                            data-toggle="modal"
+                                                            data-target="#exampleModalCenter<?php echo $val_hot['id'] ?>"><i
+                                                                class="fa fa-eye"></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <?php foreach($data_ban_chay as $val_chay) { 
+            $sp_img = $this->Model->fetchOne("select * from sp_image where id_SP = '".$val_chay['id']."'");
+            $mau_sp = $this->Model->fetch("select * from sp_ton where id_SP = '".$val_chay['id']."'");
+            ?>
+        <!-- Modal thông tin sản phẩm -->
+        <div class="modal fade modal-wrapper" id="exampleModalCenter<?php echo $val_chay['id'] ?>">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <div class="modal-inner-area row">
+                            <div class="col-lg-5 col-md-6 col-sm-6">
+
+                                <div class="product-details-left">
+                                    <div class="product-details-images slider-navigation-1">
+                                        <div class="lg-image">
+                                            <img src="public/Upload/Products/<?php echo $val_chay['Anh'] ?>"
+                                                alt="product image">
+                                        </div>
+                                        <?php if($sp_img['Anh0'] != null){ ?>
+                                        <div class="lg-image">
+                                            <img src="public/Upload/Products/<?php echo $sp_img['Anh0'] ?>"
+                                                alt="product image">
+                                        </div>
+                                        <?php } ?>
+                                        <?php if($sp_img['Anh1'] != null){ ?>
+                                        <div class="lg-image">
+                                            <img src="public/Upload/Products/<?php echo $sp_img['Anh1'] ?>"
+                                                alt="product image">
+                                        </div>
+                                        <?php } ?>
+                                        <?php if($sp_img['Anh2'] != null){ ?>
+                                        <div class="lg-image">
+                                            <img src="public/Upload/Products/<?php echo $sp_img['Anh2'] ?>"
+                                                alt="product image">
+                                        </div>
+                                        <?php } ?>
+                                        <?php if($sp_img['Anh3'] != null){ ?>
+                                        <div class="lg-image">
+                                            <img src="public/Upload/Products/<?php echo $sp_img['Anh3'] ?>"
+                                                alt="product image">
+                                        </div>
+                                        <?php } ?>
+                                        <?php if($sp_img['Anh4'] != null){ ?>
+                                        <div class="lg-image">
+                                            <img src="public/Upload/Products/<?php echo $sp_img['Anh4'] ?>"
+                                                alt="product image">
+                                        </div>
+                                        <?php } ?>
+
+
+
+                                    </div>
+                                    <div class="product-details-thumbs slider-thumbs-1">
+                                        <div class="sm-image"><img
+                                                src="public/Upload/Products/<?php echo $val_chay['Anh'] ?>"
+                                                alt="product image thumb"></div>
+                                        <?php if($sp_img['Anh0'] != null){ ?>
+                                        <div class="sm-image"><img
+                                                src="public/Upload/Products/<?php echo $sp_img['Anh0'] ?>"
+                                                alt="product image thumb"></div>
+                                        <?php } ?>
+
+                                        <?php if($sp_img['Anh1'] != null) { ?>
+                                        <div class="sm-image"><img
+                                                src="public/Upload/Products/<?php echo $sp_img['Anh1'] ?>"
+                                                alt="product image thumb"></div>
+                                        <?php } ?>
+
+                                        <?php if($sp_img['Anh2'] != null) { ?>
+                                        <div class="sm-image"><img
+                                                src="public/Upload/Products/<?php echo $sp_img['Anh2'] ?>"
+                                                alt="product image thumb"></div>
+                                        <?php } ?>
+
+                                        <?php if($sp_img['Anh3'] != null) { ?>
+                                        <div class="sm-image"><img
+                                                src="public/Upload/Products/<?php echo $sp_img['Anh3'] ?>"
+                                                alt="product image thumb"></div>
+                                        <?php } ?>
+
+                                        <?php if($sp_img['Anh4'] != null) { ?>
+                                        <div class="sm-image"><img
+                                                src="public/Upload/Products/<?php echo $sp_img['Anh4'] ?>"
+                                                alt="product image thumb"></div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-7 col-md-6 col-sm-6">
+                                <div class="product-details-view-content pt-60">
+                                    <div class="product-info">
+                                        <h2>
+                                            <?php echo $val_chay['Ten_SP']."-".$val_chay['Loai'] ?>
+                                        </h2>
+                                        <span class="product-details-ref">Mã:
+                                            <?php echo $val_chay['Ma_SP'] ?>
+                                        </span>
+
+                                        <div class="price-box pt-20">
+                                            <?php if($val_chay['Sale'] > 0){ ?>
+                                            <span class="new-price new-price-2">
+                                                <?php echo currency_format($val_chay['Gia_Giam']) ?>
+                                            </span>
+                                            <span class="old-price" style="text-decoration: line-through;">
+                                                <?php echo currency_format($val_chay['Gia']) ?>
+                                            </span>
+                                            <span class="discount-percentage">-
+                                                <?php echo $val_chay['Sale'] ?>%
+                                            </span>
+                                            <?php } ?>
+                                            <?php if($val_chay['Sale'] == 0){ ?>
+                                            <span class="new-price">
+                                                <?php echo currency_format($val_chay['Gia']) ?>
+                                            </span>
+                                            <?php } ?>
+                                        </div>
+
+                                        <div class="product-variants">
+                                            <div class="produt-variants-size">
+
+                                                <span></span>
+                                                <select name="Mau" class="nice-select">
+                                                    <option value="0" title="Ngẫu nhiên" selected="selected">Màu Ngẫu
+                                                        nhiên</option>
+                                                    <?php foreach($mau_sp as $val_mau){ ?>
+                                                    <option value="<?php echo $val_mau['Ma_Mau'] ?>"
+                                                        title="<?php echo $val_mau['Ten_Mau'] ?>">
+                                                        <?php echo $val_mau['Ten_Mau'] ?>
+                                                    </option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="single-add-to-cart">
+                                            <form action="#" class="cart-quantity">
+                                                <a href="?ctrl=Product<?php echo '&m='.$mau_sp[0]['id'].'&id='.$val_chay['id'] ?>"
+                                                    class="add-to-cart" type="submit">Xem thêm</a>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php } ?>
         <!-- footer -->
         <div class="footer">
 
@@ -288,32 +552,38 @@
                                     <h3 class="footer-block-title">Theo dõi</h3>
                                     <ul class="social-link">
                                         <li class="twitter">
-                                            <a href="https://twitter.com/" data-toggle="tooltip" target="_blank" title="Twitter">
+                                            <a href="https://twitter.com/" data-toggle="tooltip" target="_blank"
+                                                title="Twitter">
                                                 <i class="fa fa-twitter"></i>
                                             </a>
                                         </li>
                                         <li class="rss">
-                                            <a href="https://rss.com/" data-toggle="tooltip" target="_blank" title="RSS">
+                                            <a href="https://rss.com/" data-toggle="tooltip" target="_blank"
+                                                title="RSS">
                                                 <i class="fa fa-rss"></i>
                                             </a>
                                         </li>
                                         <li class="google-plus">
-                                            <a href="https://www.plus.google.com/discover" data-toggle="tooltip" target="_blank" title="Google Plus">
+                                            <a href="https://www.plus.google.com/discover" data-toggle="tooltip"
+                                                target="_blank" title="Google Plus">
                                                 <i class="fa fa-google-plus"></i>
                                             </a>
                                         </li>
                                         <li class="facebook">
-                                            <a href="https://www.facebook.com/" data-toggle="tooltip" target="_blank" title="Facebook">
+                                            <a href="https://www.facebook.com/" data-toggle="tooltip" target="_blank"
+                                                title="Facebook">
                                                 <i class="fa fa-facebook"></i>
                                             </a>
                                         </li>
                                         <li class="youtube">
-                                            <a href="https://www.youtube.com/" data-toggle="tooltip" target="_blank" title="Youtube">
+                                            <a href="https://www.youtube.com/" data-toggle="tooltip" target="_blank"
+                                                title="Youtube">
                                                 <i class="fa fa-youtube"></i>
                                             </a>
                                         </li>
                                         <li class="instagram">
-                                            <a href="https://www.instagram.com/" data-toggle="tooltip" target="_blank" title="Instagram">
+                                            <a href="https://www.instagram.com/" data-toggle="tooltip" target="_blank"
+                                                title="Instagram">
                                                 <i class="fa fa-instagram"></i>
                                             </a>
                                         </li>
@@ -341,98 +611,6 @@
                 </div>
             </div>
 
-        </div>
-
-        <!-- Modal thông tin sản phẩm -->
-        <div class="modal fade modal-wrapper" id="exampleModalCenter37">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        <div class="modal-inner-area row">
-                            <div class="col-lg-5 col-md-6 col-sm-6">
-
-                                <div class="product-details-left">
-                                    <div class="product-details-images slider-navigation-1">
-                                        <div class="lg-image">
-                                            <img src="public/client/images/product/large-size/1.jpg" alt="product image">
-                                        </div>
-                                        <div class="lg-image">
-                                            <img src="public/client/images/product/large-size/2.jpg" alt="product image">
-                                        </div>
-                                        <div class="lg-image">
-                                            <img src="public/client/images/product/large-size/3.jpg" alt="product image">
-                                        </div>
-                                        <div class="lg-image">
-                                            <img src="public/client/images/product/large-size/4.jpg" alt="product image">
-                                        </div>
-                                        <div class="lg-image">
-                                            <img src="public/client/images/product/large-size/5.jpg" alt="product image">
-                                        </div>
-                                        <div class="lg-image">
-                                            <img src="public/client/images/product/large-size/6.jpg" alt="product image">
-                                        </div>
-                                    </div>
-                                    <div class="product-details-thumbs slider-thumbs-1">
-                                        <div class="sm-image"><img src="public/client/images/product/small-size/1.jpg" alt="product image thumb"></div>
-                                        <div class="sm-image"><img src="public/client/images/product/small-size/2.jpg" alt="product image thumb"></div>
-                                        <div class="sm-image"><img src="public/client/images/product/small-size/3.jpg" alt="product image thumb"></div>
-                                        <div class="sm-image"><img src="public/client/images/product/small-size/4.jpg" alt="product image thumb"></div>
-                                        <div class="sm-image"><img src="public/client/images/product/small-size/5.jpg" alt="product image thumb"></div>
-                                        <div class="sm-image"><img src="public/client/images/product/small-size/6.jpg" alt="product image thumb"></div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="col-lg-7 col-md-6 col-sm-6">
-                                <div class="product-details-view-content pt-60">
-                                    <div class="product-info">
-                                        <h2>Tên sản phẩm</h2>
-                                        <span class="product-details-ref">Reference: demo_15</span>
-
-                                        <div class="price-box pt-20">
-                                            <span class="Mới-price Mới-price-2">2.000.000đ</span>
-                                        </div>
-                                        <div class="product-desc">
-                                            <p>
-                                                <span>100% cotton double printed dress. Black and white striped top and orange high waisted skater skirt bottom. Lorem ipsum dolor sit amet, consectetur adipisicing elit. quibusdam corporis, earum facilis et nostrum dolorum accusamus similique eveniet quia pariatur.
-                                                    </span>
-                                            </p>
-                                        </div>
-                                        <div class="product-variants">
-                                            <div class="produt-variants-size">
-                                                <label>Màu</label>
-                                                <select class="nice-select">
-                                                        <option value="1" title="S" selected="selected">Xanh</option>
-                                                        <option value="2" title="M">Đỏ</option>
-                                                        <option value="3" title="L">Tím</option>
-                                                    </select>
-                                            </div>
-                                        </div>
-                                        <div class="single-add-to-cart">
-                                            <form action="#" class="cart-quantity">
-                                                <div class="quantity">
-                                                    <label>Số lượng</label>
-                                                    <div class="cart-plus-minus">
-                                                        <input class="cart-plus-minus-box" value="1" type="text">
-                                                        <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
-                                                        <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
-                                                    </div>
-                                                </div>
-                                                <button class="add-to-cart" type="submit">Thêm vào giỏ</button>
-                                            </form>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
     </div>

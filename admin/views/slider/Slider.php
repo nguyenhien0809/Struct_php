@@ -51,7 +51,7 @@
                                 $stt=0;
                                 foreach ($data as $value) { 
                                     $stt++;
-                                    $record = $this->Model->fetchOne("select * from info_user where id_user='".$value['id']."'");
+                                    
                             ?>
                             <tr>
                                 <td width="40px"><?php echo $stt ?></td>

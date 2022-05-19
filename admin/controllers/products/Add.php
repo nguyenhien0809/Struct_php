@@ -12,7 +12,8 @@
                 $Ma_TH = isset($_POST['Thuong_Hieu']) ? $_POST['Thuong_Hieu'] : "";
                 $Ten_SP = isset($_POST['Ten_SP']) ? $_POST['Ten_SP'] : "";
                 $Loai = isset($_POST['Loai']) ? trim(strtoupper($_POST['Loai'])) : "";
-                $Mo_Ta = isset($_POST['Mo_Ten']) ? $_POST['Mo_Ta'] : "";
+                $Mo_Ta = isset($_POST['Mo_Ta']) ? $_POST['Mo_Ta'] : "";
+
                 $Gia = isset($_POST['Gia']) ? $_POST['Gia'] : "";
                 if(empty($Ma_SP) || empty($Ma_DM) || empty($Ma_TH) || empty($Gia) || empty($Ten_SP)){
                     ?> <script> window.alert("Vui lòng nhập đủ thông tin") </script> <?php

@@ -72,7 +72,7 @@
                     $data = $this->Model->fetch("SELECT * from slider order by id desc limit 25");
                 break;
             }
-            //$data = $this->Model->fetch("Select * from slider");
+
             include "views/slider/Slider.php";
         }
     }
