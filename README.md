@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Update**
 -Thêm tb_Danh_gia trong database-
 -Thêm đánh giá sản phẩm và hiển thị nội dung của người đã đánh giá-
@@ -8,3 +9,6 @@ Update**
 -Sửa lại tb_sp-
 *Admin
 -còn nhiều lỗi
+=======
+Trang web đang trong quá trình xây dựng
+>>>>>>> c8104dd68e4428ece20323273f9b75652ae61e3f
