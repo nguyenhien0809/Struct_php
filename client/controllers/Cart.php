@@ -16,7 +16,15 @@
                         foreach($idsp as $ind => $val_id  ){
                             $check = $this->Model->fetchOne("Select * from sp_ton where id = '$idmau[$ind]' and id_SP = '$val_id'");
                             if($sl[$ind] > $check['So_Luong']){
-                                ?> <script>alert("Sản phẩm bạn muốn cập nhật đã hết hàng")</script> <?php
+                                echo '<!-- Showing alert -->
+                                <div id="alert" class="alert alert-danger">
+                                    Sản phẩm đã hết hàng không thể tăng số lượng!.
+                                </div>';
+                                ?><script type="text/javascript">
+                                    setTimeout(function () {
+                                        $('#alert').alert('close');
+                                    }, 5000);
+                                </script><?php
                             }else{
                                 
                                 if(isset($_SESSION['gio_hang'][$val_id][$idmau[$ind]])){
@@ -34,7 +42,7 @@
                             }
                             
                         }
-                    echo "<meta http-equiv='refresh' content='0; URL=?ctrl=Cart'>";
+                    //echo "<meta http-equiv='refresh' content='0; URL=?ctrl=Cart'>";
                     break;
                 
             }

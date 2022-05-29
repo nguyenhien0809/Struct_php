@@ -111,7 +111,7 @@
                                                 <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                                             </div>
                                         </div>
-                                        <button class="add-to-cart" <?php echo $data_mau['So_Luong'] > 1 ? '' : 'disabled' ?> type="submit"><?php echo $data_mau['So_Luong'] > 1 ? "Thêm vào giỏ" : 'Hết hàng' ?></button>
+                                        <button class="add-to-cart" <?php echo $data_mau['So_Luong'] > 0 ? '' : 'disabled' ?> type="submit"><?php echo $data_mau['So_Luong'] > 0 ? "Thêm vào giỏ" : 'Hết hàng' ?></button>
                                     </form>
                                 </div>
                                 <div class="product-additional-info pt-25">

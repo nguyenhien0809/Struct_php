@@ -28,7 +28,10 @@
                         case 'gio_hang':
                             $sl = isset($_POST['So_Luong']) ? $_POST['So_Luong'] : 1;
                             if(isset($_SESSION['gio_hang'][$id][$id_m])){
-                                $_SESSION['gio_hang'][$id][$id_m] += 1 ;
+                                $check_sl = $this->Model->fetchOne("select * from sp_ton where id = '$id_m' and id_SP = '$id'");
+                                if($check_sl['So_Luong'] > $_SESSION['gio_hang'][$id][$id_m]){
+                                    $_SESSION['gio_hang'][$id][$id_m] += 1 ;
+                                }
                             }else{
                                 $_SESSION['gio_hang'][$id][$id_m] = $sl;
                             }

@@ -44,6 +44,7 @@
     <link rel="stylesheet" href="public/client/css/responsive.css">
     <!-- Modernizr js -->
     <script src="public/client/js/vendor/modernizr-2.8.3.min.js"></script>
+
 </head>
 
 <body>
