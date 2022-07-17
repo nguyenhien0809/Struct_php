@@ -8,7 +8,7 @@
         </div>
     </div>
 </div>
-
+<?php if(isset($_SESSION['gio_hang']) && count($_SESSION['gio_hang']) > 0) { ?>
 <form action="?ctrl=Checkout&" method="post">
     <div class="checkout-area pt-60 pb-30">
         <div class="container">
@@ -16,37 +16,37 @@
                 <div class="col-lg-6 col-12">
 
                     <div class="checkbox-form">
-                        <h3>Chi tiết hóa đơn</h3>
+                        <h3>Thông tin giao hàng</h3>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="checkout-form-list">
-                                    <label>Mã hóa đơn <span class="required">*</span></label>
-                                    <input placeholder="" name="Ma_HD" readonly value="<?php echo date(" YmdHis") ?>" type="text">
+                                    <label>Mã đơn hàng <span class="required">*</span></label>
+                                    <input placeholder="" name="ma_dh" readonly value="<?php echo date(" YmdHis") ?>" type="text">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="checkout-form-list">
                                     <label>Họ và tên <span class="required">*</span></label>
-                                    <input placeholder="abc..." name="Ho_Ten" value="<?php echo $data['Ho_Ten'] ?>" type="text">
+                                    <input placeholder="abc..." name="ho_ten" required value="<?php echo $data['ho_ten'] ?>" type="text">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="checkout-form-list">
                                     <label>Địa chỉ <span class="required">*</span></label>
-                                    <input name="Dia_Chi" placeholder="Địa chỉ nhận hàng..."  value="<?php echo $data['Dia_Chi'] ?>"
+                                    <input name="dia_chi" placeholder="Địa chỉ nhận hàng..." required value="<?php echo $data['dia_chi'] ?>"
                                         type="text">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="checkout-form-list">
                                     <label>Số điện thoại <span class="required">*</span></label>
-                                    <input name="SDT" type="text" value="<?php echo $data['Sdt'] ?>" placeholder="099...">
+                                    <input name="sdt" type="text" value="<?php echo $data['sdt'] ?>" required placeholder="099...">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="checkout-form-list">
                                     <label>Yêu cầu khác <span class="required">*</span></label>
-                                    <textarea name="YeuCau" placeholder="Yêu cầu khác (không bắt buộc)"></textarea>
+                                    <textarea name="yeu_cau" placeholder="Yêu cầu khác (không bắt buộc)"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -68,22 +68,19 @@
                                     <?php $sum = 0;
                                     if(isset($_SESSION['gio_hang'])){
                                         foreach($_SESSION['gio_hang'] as $id_sp => $sl){ 
-                                            $data_sp = $this->Model->fetchOne("select * from view_sp where id = '$id_sp'");
-                                            foreach($_SESSION['gio_hang'][$id_sp] as $id_m => $sll){ 
-                                                $data_m = $this->Model->fetchOne("select * from sp_ton where id = '$id_m'");?>
+                                            $data_sp = $this->Model->fetchOne("select * from sp_view where id_loai = '$id_sp'");?>
                                     <tr class="cart_item">
                                         <td class="cart-product-name">
-                                            <?php echo $data_sp['Ten_SP']."-".$data_sp['Loai']."-".$data_m['Ten_Mau'] ?>
+                                            <?php echo $data_sp['ten_sp']."-".$data_sp['loai']."-".$data_sp['ten_mau'] ?>
                                             <strong class="product-quantity"> ×
-                                                <?php echo $sll ?>
+                                                <?php echo $sl ?>
                                             </strong>
                                         </td>
                                         <td class="cart-product-total"><span class="amount">
-                                                <?php echo currency_format($data_sp['Gia_Giam'] * $sll) ?>
+                                                <?php echo currency_format($data_sp['gia'] * $sl) ?>
                                             </span></td>
                                     </tr>
-                                    <?php $sum +=$data_sp['Gia_Giam'] * $sll; } ?>
-                                    <?php } ?>
+                                    <?php $sum +=$data_sp['gia'] * $sl; } ?>
                                     <?php } ?>
 
                                 </tbody>
@@ -124,26 +121,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="card mt-20">
-                                        <div class="card-header" id="#payment-3">
-                                            <h5 class="panel-title">
-                                                <a class="collapsed" data-toggle="collapse" data-target="#collapseThree"
-                                                    aria-expanded="false" aria-controls="collapseThree">
-                                                    VNPAY
-                                                </a>
-                                            </h5>
-                                        </div>
-                                        <div id="collapseThree" class="collapse" data-parent="#accordion">
-                                            <div class="card-body">
-                                                <p>Thực hiện thanh toán đơn hàng của bạn qua các qua các ngân hàng
-                                                    đã liên kết với VNPAY</p>
-                                            </div>
-                                            <div class="order-button-payment">
-                                                <input value="Thanh toán qua VNPAY" name="vnpay" type="submit">
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -153,3 +130,10 @@
         </div>
     </div>
 </form>
+<?php }
+else{ ?>
+        <div class="container mt-2 mb-2">
+            <h3 class="text-secondary">Bạn chưa có đơn hàng nào cả !</h3>
+            <a href="?" class="text-warning">Hãy đi mua sắm ngay thôi >></a>
+        </div>
+<?php }?>

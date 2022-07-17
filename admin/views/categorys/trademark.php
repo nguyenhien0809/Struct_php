@@ -22,20 +22,23 @@
                         <td width="40px">STT</td>
                         <td >Mã thương hiệu</td>
                         <td>Tên thương hiệu</td>
+                        <td >Danh mục</td>
                         <td width="110px"></td>
                     </tr>
                     <?php
                         $stt=0;
                         foreach ($data as $value) { 
                             $stt++;
+                            $dm = $this->Model->fetchOne("select * from danh_muc where id = '".$value['id_dm']."'");
                     ?>
                     <tr>
-                        <td style="text-align:center;"><?php echo $stt ?></td>
-                        <td><?php echo $value['Ma_TH'] ?></td>
-                        <td><?php echo $value['Ten_TH'] ?></td>
+                        <td style="text-align:center;"><?= $stt ?></td>
+                        <td><?= $value['ma_th'] ?></td>
+                        <td><?= $value['ten_th'] ?></td>
+                        <td><?= $dm['ten_dm'] ?></td>
                         <td>
-                            <a href="index.php?ctrl=categorys/trademark&act=edit&Ma_TH=<?php echo $value['Ma_TH'] ?>" class="btn btn-success btn-sm">Sửa</a>
-                            <a href="index.php?ctrl=categorys/trademark&act=delete&Ma_TH=<?php echo $value['Ma_TH'] ?>" class="btn btn-sm btn-warning">Xoá</a>
+                            <a href="index.php?ctrl=categorys/trademark&act=edit&id=<?= $value['id'] ?>" class="btn btn-success btn-sm">Sửa</a>
+                            <a href="index.php?ctrl=categorys/trademark&act=delete&id=<?= $value['id'] ?>" class="btn btn-sm btn-warning">Xoá</a>
                         </td>
                     </tr>
                     <?php } ?>
@@ -51,11 +54,19 @@
 
         <?php if (isset($_GET['act']) && $_GET['act']=="edit") { ?>
             <div class="panel panel-primary">
-                <div class="panel-heading">Sửa danh mục</div>
+                <div class="panel-heading">Sửa thương hiệu</div>
                 <div class="panel-body">
-                    <form action="index.php?ctrl=categorys/trademark&act=do_edit&Ma_TH=<?php echo $record['Ma_TH'] ?>" method="post">
-                        <input type="text" name="Ma_TH" value="<?php echo $record['Ma_TH'] ?>" readonly class="form-control">
-                        <input type="text" name="Ten_TH" value="<?php echo $record['Ten_TH'] ?>" require class="form-control" style="margin-top:10px;">
+                    <form action="index.php?ctrl=categorys/trademark&act=do_edit&id=<?= $record['id'] ?>" method="post">
+                        <span>Mã thương hiệu</span>
+                        <input type="text" name="ma_th" value="<?= $record['ma_th'] ?>" required class="form-control" style="margin-bottom:10px;">
+                        <span>Danh mục</span>
+                        <select name="danh_muc" id="" required class="form-control" style="margin-bottom:10px;">
+                            <?php foreach ($danh_muc as $val_dm){ ?>
+                            <option value="<?= $val_dm['id'] ?> >" <?= $record['id'] == $val_dm['id'] ? 'selected' :'' ?> ><?= $val_dm['ten_dm'] ?></option>
+                            <?php } ?>
+                        </select>
+                        <span>Tên thương hiệu</span>
+                        <input type="text" name="ten_th" value="<?= $record['ten_th'] ?>" required class="form-control" style="margin-bottom:10px;">
                         <input type="submit" value="Sửa" class="btn btn-primary" style="margin-top:10px;">                        
                         <a  href="index.php?ctrl=categorys/trademark"  class="btn btn-primary" style="margin-top:10px;">Thoát</a>
                     </form>
@@ -64,14 +75,22 @@
         <?php } ?>
        
         <div class="panel panel-primary">
-            <div class="panel-heading">Thêm danh mục</div>
+            <div class="panel-heading">Thêm thương hiệu</div>
             <div class="panel-body">
                 <form action="index.php?ctrl=categorys/trademark&act=add" method="post">
                     <?php if (isset($thong_bao)) {?>
                         <Span style="color:red;"><?php echo($thong_bao); ?></Span> 
                     <?php } ?>
-                    <input type="text" name="Ma_TH" placeholder="Mã Thương hiệu" require id="UserName" class="form-control">
-                    <input type="text" name="Ten_TH" placeholder="Tên thương hiệu" require id="Password" class="form-control" style="margin-top:10px;"> 
+                    <span>Mã thương hiệu</span>
+                    <input type="text" name="ma_th" placeholder="Mã Thương hiệu" required  class="form-control" style="margin-bottom:10px;">
+                    <span>Danh mục</span>
+                    <select name="danh_muc" id="" required class="form-control" style="margin-bottom:10px;">
+                        <?php foreach ($danh_muc as $val_dm){ ?>
+                            <option value="<?= $val_dm['id'] ?> >" ><?= $val_dm['ten_dm'] ?></option>
+                        <?php } ?>
+                    </select>
+                    <span>Tên thương hiệu</span>
+                    <input type="text" name="ten_th" placeholder="Tên thương hiệu" required  class="form-control" style="margin-bottom:10px;">
                     <input type="submit" id="Them" value="Thêm" class="btn btn-primary" style="margin-top:10px;">
                 </form>
             </div>

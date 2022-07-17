@@ -30,36 +30,32 @@
                                     <tbody>
                                         <?php $tong = 0;
                                             if(isset($_SESSION['gio_hang']))
-                                                foreach($_SESSION['gio_hang'] as $id_sp => $sl) { 
-                                                    foreach($_SESSION['gio_hang'][$id_sp] as $id_mau => $sll) { 
-                                                $data_gh = $this->Model->fetchOne("select * from view_sp where id = '$id_sp'");
-                                                $data_Mau = $this->Model->fetchOne("select * from sp_ton where id = '$id_mau'"); ?>
+                                                foreach($_SESSION['gio_hang'] as $id_sp => $sl) {
+                                                $data_gh = $this->Model->fetchOne("select * from sp_view where id_loai = '$id_sp'"); ?>
                                                 <input type="hidden" name="idSP[]" value="<?php echo $id_sp ?>">
-                                                <input type="hidden" name="idmau[]" value="<?php echo $id_mau ?>">
                                                 <tr>
-                                                    <td class="li-product-remove"><a href="?ctrl=Cart&dm=gio_hang&act=delete<?php echo '&m='.$id_mau.'&id='.$id_sp ?>"><i class="fa fa-times"></i></a>
+                                                    <td class="li-product-remove"><a href="?ctrl=Cart&dm=gio_hang&act=delete<?php echo '&id='.$id_sp ?>"><i class="fa fa-times"></i></a>
                                                     </td>
-                                                    <td class="li-product-thumbnail"><a href="?ctrl=Product<?php echo '&m='.$id_mau.'&id='.$id_sp ?>"><img
-                                                                src="public/Upload/Products/<?php echo $data_gh['Anh'] ?>"
+                                                    <td class="li-product-thumbnail"><a href="?ctrl=Product<?php echo '&id='.$id_sp ?>"><img
+                                                                src="public/Upload/Products/<?php echo $data_gh['anh'] ?>"
                                                                 alt="Li's Product Image" width="150px"></a></td>
-                                                    <td class="li-product-name"><a href="?ctrl=Product<?php echo '&m='.$id_mau.'&id='.$id_sp ?>"><?php echo $data_gh['Ten_SP'] ?></a></td>
-                                                    <td class="li-product-name"><a><?php echo $data_gh['Loai'] ?></a></td>
-                                                    <td class="li-product-name"><div class="border rounded m-auto" style="height: 30px;width: 30px;background:<?php echo $data_Mau['Ma_Mau'] ?>;"></div>
-                                                        <span><?php echo $data_Mau['Ten_Mau'] ?></span>
+                                                    <td class="li-product-name"><a href="?ctrl=Product<?php echo '&id='.$id_sp ?>"><?php echo $data_gh['ten_sp'] ?></a></td>
+                                                    <td class="li-product-name"><a><?php echo $data_gh['loai'] ?></a></td>
+                                                    <td class="li-product-name"><div class="border rounded m-auto" style="height: 30px;width: 30px;background:<?php echo $data_gh['ma_mau'] ?>;"></div>
+                                                        <span><?php echo $data_gh['ten_mau'] ?></span>
                                                     </td>
-                                                    <td class="li-product-price"><span class="amount"><?php echo currency_format($data_gh['Gia_Giam']) ?></span></td>
+                                                    <td class="li-product-price"><span class="amount"><?php echo currency_format($data_gh['gia']) ?></span></td>
                                                     <td class="quantity">
                                                         <label>Số lượng</label>
                                                         <div class="cart-plus-minus">
-                                                            <input class="cart-plus-minus-box" name="so_luong[]" value="<?php echo $sll ?>" type="text">
+                                                            <input class="cart-plus-minus-box" name="so_luong[]" value="<?php echo $sl ?>" type="text">
                                                             <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
                                                             <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                                                         </div>
                                                     </td>
-                                                    <td class="product-subtotal"><span class="amount"><?php echo currency_format($data_gh['Gia_Giam']*$sll) ?></span></td>
+                                                    <td class="product-subtotal"><span class="amount"><?php echo currency_format($data_gh['gia']*$sl) ?></span></td>
                                                 </tr>
-                                        <?php $tong += $data_gh['Gia_Giam']*$sll; } ?>
-                                        <?php } ?>
+                                        <?php $tong += $data_gh['gia']*$sl; } ?>
                                     </tbody>
                                 </table>
                             </div>

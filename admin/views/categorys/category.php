@@ -31,11 +31,11 @@
                     ?>
                     <tr>
                         <td style="text-align:center;"><?php echo $stt ?></td>
-                        <td><?php echo $value['Ma_DM'] ?></td>
-                        <td><?php echo $value['Ten_DM'] ?></td>
+                        <td><?php echo $value['ma_dm'] ?></td>
+                        <td><?php echo $value['ten_dm'] ?></td>
                         <td>
-                            <a href="index.php?ctrl=categorys/category&act=edit&Ma_DM=<?php echo $value['Ma_DM'] ?>" class="btn btn-success btn-sm">Sửa</a>
-                            <a href="index.php?ctrl=categorys/category&act=delete&Ma_DM=<?php echo $value['Ma_DM'] ?>" class="btn btn-sm btn-warning">Xoá</a>
+                            <a href="index.php?ctrl=categorys/category&act=edit&id=<?= $value['id'] ?>" class="btn btn-success btn-sm">Sửa</a>
+                            <a href="index.php?ctrl=categorys/category&act=delete&id=<?= $value['id'] ?>" class="btn btn-sm btn-warning">Xoá</a>
                         </td>
                     </tr>
                     <?php } ?>
@@ -53,9 +53,9 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">Sửa danh mục</div>
                 <div class="panel-body">
-                    <form action="index.php?ctrl=categorys/category&act=do_edit&Ma_DM=<?php echo $record['Ma_DM'] ?>" method="post">
-                        <input type="text" name="Ma_DM" value="<?php echo $record['Ma_DM'] ?>" readonly class="form-control">
-                        <input type="text" name="Ten_DM" value="<?php echo $record['Ten_DM'] ?>" require class="form-control" style="margin-top:10px;">
+                    <form action="index.php?ctrl=categorys/category&act=do_edit&id=<?= $record['id'] ?>" method="post">
+                        <input type="text" name="ma_dm" value="<?= $record['ma_dm'] ?>" required minlength="2" class="form-control">
+                        <input type="text" name="ten_dm" value="<?= $record['ten_dm'] ?>" required minlength="3" class="form-control" style="margin-top:10px;">
                         <input type="submit" value="Sửa" class="btn btn-primary" style="margin-top:10px;">                        
                         <a  href="index.php?ctrl=categorys/category"  class="btn btn-primary" style="margin-top:10px;">Thoát</a>
                     </form>
@@ -70,8 +70,8 @@
                     <?php if (isset($thong_bao)) {?>
                         <Span style="color:red;"><?php echo($thong_bao); ?></Span> 
                     <?php } ?>
-                    <input type="text" name="Ma_DM" placeholder="Mã danh mục" require id="UserName" class="form-control">
-                    <input type="text" name="Ten_DM" placeholder="Tên danh mục" require id="Password" class="form-control" style="margin-top:10px;"> 
+                    <input type="text" name="ma_dm" placeholder="Mã danh mục" required id="UserName" class="form-control">
+                    <input type="text" name="ten_dm" placeholder="Tên danh mục" required id="Password" class="form-control" style="margin-top:10px;">
                     <input type="submit" id="Them" value="Thêm" class="btn btn-primary" style="margin-top:10px;">
                 </form>
             </div>

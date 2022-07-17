@@ -3,22 +3,26 @@
         public function __construct(){
             parent::__construct();
             $act = isset($_GET['act']) ? $_GET['act'] : "";
-
+            $id = isset($_GET['id']) ? '&id='.$_GET['id'] : "" ;
+            $ctrl = isset($_GET['ctrl']) && $_GET['ctrl'] != "Login_register" ? 'ctrl='.$_GET['ctrl'] : "" ;
             
             switch ($act) {
                 case "login":
                     $Email = isset($_POST['Email']) ? $_POST['Email'] : "";
                     $Password = isset($_POST['Password']) ? $_POST['Password'] : "";
 
-                    $check = $this->Model->fetchOne("select * from tb_users where Email = '$Email'");
+                    $check = $this->Model->fetchOne("select * from tb_users where email = '$Email'");
 
-                    if (isset($check['Email'])) {
-                        if ($check['Password'] == md5($Password)) {
-                            
-                            $_SESSION['account'] = $Email;
-                            $_SESSION['name'] = $check['Ho_Ten'];
+                    if (isset($check['email'])) {
+                        if ($check['password'] == md5($Password)) {
+                            $customer = array(
+                                'id' => $check['id'],
+                                'email' => $Email,
+                                'ho_ten' => $check['ho_ten']
+                            );
+                            $_SESSION['customer'] = $customer;
 
-                            echo "<meta http-equiv='refresh' content='0; URL=?'>";
+                            echo "<meta http-equiv='refresh' content='0; URL=?".$ctrl.$id."'>";
                         }else{
                             ?> <script>alert("Sai mật khẩu!")</script> <?php
                             echo "<meta http-equiv='refresh' content='0; URL=?ctrl=Login_register'>";

@@ -20,11 +20,11 @@
                                 <div class="row">
                                     <div class="col-md-12 col-12 mb-20">
                                         <label>Email*</label>
-                                        <input class="mb-0" name="Email" type="email" placeholder="Email">
+                                        <input class="mb-0" name="Email" type="email" required placeholder="Email">
                                     </div>
                                     <div class="col-12 mb-20">
                                         <label>Mật khẩu*</label>
-                                        <input class="mb-0" name="Password" type="password" placeholder="Mật khẩu">
+                                        <input class="mb-0" name="Password" type="password" required placeholder="Mật khẩu">
                                     </div>
                                     <div class="col-md-8">
                                         <div class="check-box d-inline-block ml-0 ml-md-2 mt-10">
@@ -43,29 +43,29 @@
                         </form>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12">
-                        <form action="?ctrl=Login_register&act=register" method="post">
+                        <form action="?ctrl=Login_register&act=register" id="form-register" method="post">
                             <div class="login-form">
                                 <h4 class="login-title">Đăng ký</h4>
                                 <div class="row">
                                     <div class="col-md-12 mb-20">
-                                        <label>Họ và tên*</label>
-                                        <input class="mb-0" name="Ho_Ten" type="text" placeholder="Họ và tên*">
+                                        <span>Họ và tên</span><span class="text-danger">*</span>
+                                        <input class="mb-0" name="Ho_Ten" id="name" type="text"  placeholder="Họ và tên">
                                     </div>
                                     <div class="col-md-12 mb-20">
-                                        <label>Tên tài khoản*</label>
-                                        <input class="mb-0" name="Email" type="Email" placeholder="Email*">
+                                        <span>Email</span><span class="text-danger">*</span>
+                                        <input class="mb-0" name="Email" id="email" type="Email"  placeholder="Email*">
                                     </div>
                                     <div class="col-md-6 mb-20">
-                                        <label>Mật khẩu*</label>
-                                        <input class="mb-0" name="Password" type="password" placeholder="Mật khẩu">
+                                        <span>Mật khẩu</span><span class="text-danger">*</span>
+                                        <input class="mb-0" name="Password" id="password" type="password" placeholder="Mật khẩu">
                                     </div>
                                     <div class="col-md-6 mb-20">
-                                        <label>Nhập lại mật khẩu*</label>
-                                        <input class="mb-0" name="re_Password" type="password"
+                                        <span>Nhập lại mật khẩu</span><span class="text-danger">*</span>
+                                        <input class="mb-0" name="re_Password" id="re_password"  type="password"
                                             placeholder="Nhập lại mật khẩu">
                                     </div>
                                     <div class="col-12">
-                                        <button class="register-button mt-0">Đăng ký</button>
+                                        <button class="register-button mt-0" id="btn_comfirm">Đăng ký</button>
                                     </div>
                                 </div>
                             </div>
@@ -74,3 +74,40 @@
                 </div>
             </div>
         </div>
+
+    <script type="text/javascript">
+            $('#form-register').validate({
+                rules : {
+                    Ho_Ten: "required",
+                    Email: {
+                        required: true,
+                        email: true
+                    },
+                    Password : {
+                        required: true,
+                        minlength : 5
+                    },
+                    re_Password : {
+                        equalTo : "#password"
+                    }
+                },
+                messages: {
+                    Ho_Ten : "Bạn chưa nhập họ tên",
+                    Email :{
+                        required: "Bạn chưa nhập Email",
+                        email: "Email của bạn phải đúng định dạng ví dụ: abc@gmail.com"
+                    },
+                    Password : {
+                        required: "Bạn chưa nhập mật khẩu!",
+                        minlength : "Hãy nhập trên 5 ký tự!"
+                    },
+                    re_Password : {
+                        equalTo: "Mật khẩu không khớp"
+                    }
+
+                }
+            });
+            $('#btn_comfirm').click(function(){
+                console.log($('#form-register').valid());
+            });
+    </script>

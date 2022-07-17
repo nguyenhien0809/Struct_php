@@ -18,22 +18,18 @@
             
             switch ($act) {
                 case 'logout':
-                    unset($_SESSION['account']);
-                    unset($_SESSION['name']);
+                    unset($_SESSION['customer']);
 
                     echo "<meta http-equiv='refresh' content='0; URL=?'>";
                     break;  
                 case 'add':
                     switch ($dm) {
                         case 'gio_hang':
-                            $sl = isset($_POST['So_Luong']) ? $_POST['So_Luong'] : 1;
-                            if(isset($_SESSION['gio_hang'][$id][$id_m])){
-                                $check_sl = $this->Model->fetchOne("select * from sp_ton where id = '$id_m' and id_SP = '$id'");
-                                if($check_sl['So_Luong'] > $_SESSION['gio_hang'][$id][$id_m]){
-                                    $_SESSION['gio_hang'][$id][$id_m] += 1 ;
-                                }
+                            $sl = isset($_POST['so_luong']) ? $_POST['so_luong'] : 1;
+                            if(isset($_SESSION['gio_hang'][$id])){
+                                $_SESSION['gio_hang'][$id] += 1 ;
                             }else{
-                                $_SESSION['gio_hang'][$id][$id_m] = $sl;
+                                $_SESSION['gio_hang'][$id] = $sl;
                             }
                             
                             if(isset($_GET['ctrl'])){
@@ -43,16 +39,20 @@
                             }
                             break;
                         case 'yeu_thich':
-                            if(isset($_SESSION['yeu_thich'][$id])){
-                                $_SESSION['yeu_thich'][$id]=1;
-                            }else{
-                                $_SESSION['yeu_thich'][$id]=1;
-                            }
 
-                            if(isset($_GET['ctrl'])){
-                                echo "<meta http-equiv='refresh' content='0; URL=?ctrl=".$_GET['ctrl'] ."&id=$id'>";
+                            if(isset($_SESSION['customer'])){
+                                $id_user = $_SESSION['customer']['id'];
+                                $data = $this->Model->fetch("select * from yeu_thich where id_user = '$id_user'");
+
+                                $this->Model->execute("INSERT INTO `yeu_thich`(`id`, `id_user`, `id_sp`) VALUES ('','$id_user','$id')");
+
+                                if(isset($_GET['ctrl'])){
+                                    echo "<meta http-equiv='refresh' content='0; URL=?ctrl=".$_GET['ctrl'] ."&id=$id'>";
+                                }else{
+                                    echo "<meta http-equiv='refresh' content='0; URL=?'>";
+                                }
                             }else{
-                                echo "<meta http-equiv='refresh' content='0; URL=?'>";
+                                include "client/views/Login_register.php";
                             }
                             break;
                     }   
@@ -61,12 +61,7 @@
                     switch ($dm) {
                         case 'gio_hang':
                             if(isset($_SESSION['gio_hang'][$id])){
-                                if(count($_SESSION['gio_hang'][$id]) > 1){
-                                    unset($_SESSION['gio_hang'][$id][$id_m]);
-                                }else{
-                                    unset($_SESSION['gio_hang'][$id]);
-                                }
-                                
+                                 unset($_SESSION['gio_hang'][$id]);
                             }
                             
                             if(isset($_GET['ctrl'])){
@@ -75,34 +70,27 @@
                                 echo "<meta http-equiv='refresh' content='0; URL=?'>";
                             }
                             break;
-                        case 'yeu_thich':
-                            if(isset($_SESSION['yeu_thich'][$id])){
-                                unset($_SESSION['yeu_thich'][$id]);
-                            }
-                            
-                            if(isset($_GET['ctrl'])){
-                                echo "<meta http-equiv='refresh' content='0; URL=?ctrl=".$_GET['ctrl'] ."'>";
-                            }else{
-                                echo "<meta http-equiv='refresh' content='0; URL=?'>";
-                            }
-                            break;
+
                     }
                     break;
                       
                     
             }
+            if(isset($_SESSION['customer'])) {
+                $id_user = $_SESSION['customer']['id'];
+                $yeu_thich = $this->Model->count("select * from yeu_thich where id_user = '$id_user'");
+            }
             $data_dmm = $this->Model->fetch("select * from danh_muc");
-            $data_ban_chay = $this->Model->fetch("select * from sp_ban_chay limit 10");
-            $anh_sp = $this->Model->fetch("select * from sp_image");
+
             $ctrl = isset($_GET['ctrl']) ? "client/controllers/".$_GET['ctrl'].".php" : "client/controllers/Home.php";
-            //session_unset();
+
             include "layout/client/index.php";
         }
     }
     function currency_format($number, $suffix = 'đ') {
-        //if (!empty($number)) {
+        if (!empty($number)) {
             return number_format($number, 0, ',', '.') . "{$suffix}";
-        //}
+        }
     }
     new index();
 ?>

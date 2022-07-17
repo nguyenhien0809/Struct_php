@@ -16,15 +16,13 @@
         {
             parent::__construct();
 
-            if (isset($_SESSION['account'])) {
-                $Username =$_SESSION['account'];
-                $check = $this->Model->fetchOne("select * from tb_admin where UserName='$Username'");
-                if($check['id_positon'] == 1){
-                    $ctrl = isset($_GET['ctrl']) ? "controllers/".$_GET['ctrl'].".php" : "controllers/Home.php";
-                    include "../layout/admin/admin.php";
-                }else{
-                    include "controllers/Login.php";
-                }
+            if (isset($_SESSION['admin'])) {
+                $username =$_SESSION['admin']['username'];
+                $check = $this->Model->fetchOne("select * from tb_admin where username='$username'");
+
+                $contact = $this->Model->count("select * from tb_contact where seen = 0");
+                $ctrl = isset($_GET['ctrl']) ? "controllers/".$_GET['ctrl'].".php" : "controllers/Home.php";
+                include "../layout/admin/admin.php";
             } else{
                 include "controllers/Login.php";
             }

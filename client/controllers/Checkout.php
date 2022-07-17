@@ -4,45 +4,35 @@
         {
             parent::__construct();
 
-            if(isset($_SESSION['account'])){
-                $Email = $_SESSION['account'];
-                $data = $this->Model->fetchOne("Select * from tb_users where Email = '$Email'");
+            if(isset($_SESSION['customer'])){
+                $user = $_SESSION['customer']['id'];
+                $data = $this->Model->fetchOne("Select * from tb_users where id = '".$user."'");
 
                 if(isset($_POST['TToff'])){
-                    $Ma_HD = isset($_POST['Ma_HD']) ? $_POST['Ma_HD'] : date(" YmdHis");
-                    $Ho_Ten = isset($_POST['Ho_Ten']) ? $_POST['Ho_Ten'] : "";
-                    $Dia_Chi = isset($_POST['Dia_Chi']) ? $_POST['Dia_Chi'] : "";
-                    $SDT = isset($_POST['SDT']) ? $_POST['SDT'] : "";
-                    $YeuCau = isset($_POST['YeuCau']) ? $_POST['YeuCau'] : "";
-                    $Email = isset($_SESSION['account']) ? $_SESSION['account'] : "";
+                    $ma_dh = isset($_POST['ma_dh']) ? $_POST['ma_dh'] : date(" YmdHis");
+                    $ho_ten = isset($_POST['ho_ten']) ? $_POST['ho_ten'] : "";
+                    $dia_chi = isset($_POST['dia_chi']) ? $_POST['dia_chi'] : "";
+                    $sdt = isset($_POST['sdt']) ? $_POST['sdt'] : "";
+                    $yeu_cau = isset($_POST['yeu_cau']) ? $_POST['yeu_cau'] : "";
+                    $user = isset($_SESSION['customer']) ? $_SESSION['customer']['id'] : "";
     
-                    $this->Model->execute("UPDATE tb_users set Ho_Ten='$Ho_Ten',Dia_Chi='$Dia_Chi',Sdt='$SDT' Where Email = '$Email'");
+                    $this->Model->execute("UPDATE tb_users set ho_ten='$ho_ten',dia_chi='$dia_chi',sdt='$sdt' Where id = '$user'");
 
                     if(isset($_SESSION['gio_hang'])){
                         foreach($_SESSION['gio_hang'] as $id_sp => $sl){ 
-                            $data_sp = $this->Model->fetchOne("select * from view_sp where id = '$id_sp'");
-                            foreach($_SESSION['gio_hang'][$id_sp] as $id_m => $sll){ 
-                                $data_m = $this->Model->fetchOne("select * from sp_ton where id = '$id_m'");
-                                $tt = $data_sp['Gia_Giam'] * $sll;
+                            $data_sp = $this->Model->fetchOne("select * from sp_view where id_loai = '$id_sp'");
+                            $thanh_tien = $sl * $data_sp['gia'];
+                            $sql = "INSERT INTO `don_hang`(`id`, `id_user`, `ma_dh`, `id_loai`,`ma_sp`,  `ten_sp`, `loai`, `mau`, `so_luong`, `gia`, `thanh_tien`, `ho_ten`, `sdt`, `dia_chi`, `yeu_cau`, `id_tinh_trang`, `thoi_gian_dh`) 
+                                        VALUES ('','$user','$ma_dh','$id_sp','".$data_sp['ma_sp']."','".$data_sp['ten_sp']."','".$data_sp['loai']."','".$data_sp['ten_mau']."','$sl','".$data_sp['gia']."','$thanh_tien','$ho_ten','$sdt','$dia_chi','$yeu_cau','1',current_timestamp())";
+                            $this->Model->execute($sql);
 
-                                echo $sql = "insert into don_hang values('','$Ma_HD','".$data['id']."','$id_sp','".$data_sp['Ten_SP']."','$id_m','$sll','".$data_sp['Gia_Giam']."','$tt','$YeuCau','1','1',current_timestamp())";
-                                $this->Model->execute($sql);
-
-                                if(count($_SESSION['gio_hang'][$id_sp]) > 1){
-                                    unset($_SESSION['gio_hang'][$id_sp][$id_m]);
-                                }else{
-                                    unset($_SESSION['gio_hang'][$id_sp]);
-                                }
-                            }
+                            unset($_SESSION['gio_hang'][$id_sp]);
                         }
                     }
                     
                     ?><script>alert("Cảm ơn bạn đã tin tưởng và đặt hàng ở của hàng chúng tôi! Nhân viên tư vấn của chúng tôi sẽ liên hệ với bạn sớm nhất để xác nhận đơn hàng của bạn! ") </script> <?php
                 }
-    
-                if(isset($_POST['vnpay'])){
-                    ?><script>alert("Thankssss") </script> <?php
-                }
+
 
                 
                 include "Client/views/Checkout.php";

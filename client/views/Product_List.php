@@ -65,58 +65,46 @@
                                     <div class="product-area shop-product-area">
                                         <div class="row">
                                             <?php foreach($data as $values){ 
-                                                $dm = $this->Model->fetchOne("select* from danh_muc where Ma_DM = '".$values['Ma_DM']."'");
-                                                $data_m = $this->Model->fetchOne("select * from sp_ton where id_SP = '".$values['id']."'");?>
+                                                $dm = $this->Model->fetchOne("select * from danh_muc where id = '".$values['id_dm']."'");?>
                                             <div class="col-lg-4 col-md-4 col-sm-6 mt-40">
                                                 <!-- single-product-wrap start -->
                                                 <div class="single-product-wrap">
                                                     <div class="product-image">
-                                                        <a href="?ctrl=Product<?php echo '&m='.$data_m['id'].'&id='.$values['id'] ?>">
-                                                            <img src="public/Upload/Products/<?php echo $values['Anh'] ?>"
+                                                        <a href="?ctrl=Product<?php echo'&id='.$values['id'] ?>">
+                                                            <img src="public/Upload/Products/<?php echo $values['anh'] ?>"
                                                                 alt="Li's Product Image">
                                                         </a>
-                                                        <?php if($values['Sale'] > 0){ ?>
-                                                            <span class="sticker" style="background: #ff3d00;" >-<?php echo $values['Sale']."%" ?></span>
-                                                        <?php } ?>
                                                     </div>
                                                     <div class="product_desc">
                                                         <div class="product_desc_info">
                                                             <div class="product-review">
                                                                 <h5 class="manufacturer">
-                                                                    <a href="?ctrl=Product_List&act=sp&dm=<?php echo $dm['Ma_DM'] ?>"><?php echo $dm['Ten_DM'] ?></a>
+                                                                    <a href="?ctrl=Product_List&act=sp&dm=<?php echo $dm['id'] ?>"><?php echo $dm['ten_dm'] ?></a>
                                                                 </h5>
                                                                 <div class="rating-box">
                                                                     <ul class="rating">
                                                                         
-                                                                        <li <?php echo $values['Danh_Gia'] >=1 ? '' : 'class="no-star"' ?> ><i class="fa fa-star-o"></i></li>
-                                                                        <li <?php echo $values['Danh_Gia'] >=2 ? '' : 'class="no-star"' ?> ><i class="fa fa-star-o"></i></li>
-                                                                        <li <?php echo $values['Danh_Gia'] >=3 ? '' : 'class="no-star"' ?> ><i class="fa fa-star-o"></i></li>
-                                                                        <li <?php echo $values['Danh_Gia'] >=4 ? '' : 'class="no-star"' ?> ><i class="fa fa-star-o"></i>
+                                                                        <li <?php echo $values['diem_danh_gia'] >=1 ? '' : 'class="no-star"' ?> ><i class="fa fa-star-o"></i></li>
+                                                                        <li <?php echo $values['diem_danh_gia'] >=2 ? '' : 'class="no-star"' ?> ><i class="fa fa-star-o"></i></li>
+                                                                        <li <?php echo $values['diem_danh_gia'] >=3 ? '' : 'class="no-star"' ?> ><i class="fa fa-star-o"></i></li>
+                                                                        <li <?php echo $values['diem_danh_gia'] >=4 ? '' : 'class="no-star"' ?> ><i class="fa fa-star-o"></i>
                                                                         </li>
-                                                                        <li <?php echo $values['Danh_Gia'] >=5 ? '' : 'class="no-star"' ?> ><i class="fa fa-star-o"></i>
+                                                                        <li <?php echo $values['diem_danh_gia'] >=5 ? '' : 'class="no-star"' ?> ><i class="fa fa-star-o"></i>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
                                                             </div>
                                                             <h4><a class="product_name"
-                                                                    href="?ctrl=Product<?php echo '&m='.$data_m['id'].'&id='.$values['id'] ?>"><?php echo $values['Ten_SP'] ?></a>
+                                                                    href="?ctrl=Product<?php echo '&id='.$values['id'] ?>"><?php echo $values['ten_sp'] ?></a>
                                                             </h4>
-                                                            <?php if($values['Sale']>0){ ?>
                                                             <div class="price-box">
-                                                                <span style="text-decoration: line-through;"><?php echo currency_format($values['Gia']) ?></span>
-                                                                <span class="new-price" style="color: #ff3d00;"><?php echo currency_format($values['Gia_Giam']) ?></span>
+                                                                <span class="new-price"><?php echo currency_format($values['gia']) ?></span>
                                                             </div>
-                                                            <?php } ?>
-                                                            <?php if($values['Sale']==0){ ?>
-                                                            <div class="price-box">
-                                                                <span class="new-price"><?php echo currency_format($values['Gia']) ?></span>
-                                                            </div>
-                                                            <?php } ?>
                                                         </div>
                                                         <div class="add-actions">
                                                             <ul class="add-actions-link">
                                                                 <li class="add-cart active"><a
-                                                                        href="?ctrl=Product_List&act=add&dm=gio_hang&dm=gio_hang<?php echo '&m='.$data_m['id'].'&id='.$values['id'] ?>">Thêm vào giỏ</a></li>
+                                                                        href="?ctrl=Product_List&act=add&dm=gio_hang<?php echo '&id='.$values['id'].'&loai='.$values['id_loai'] ?>">Thêm vào giỏ</a></li>
                                                                 <li><a class="links-details" href="?ctrl=Product_List&act=add&dm=yeu_thich&id=<?php echo $values['id'] ?>"><i
                                                                             class="fa fa-heart-o"></i></a></li>
                                                                 <li><a href="#" title="quick view"
@@ -137,18 +125,14 @@
                                     <div class="row">
                                         <div class="col">
                                             <?php foreach($data as $values){ 
-                                                $dm = $this->Model->fetchOne("select* from danh_muc where Ma_DM = '".$values['Ma_DM']."'");
-                                                $data_m = $this->Model->fetchOne("select* from sp_ton where id_SP = '".$values['id']."'");?>
+                                                $dm = $this->Model->fetchOne("select* from danh_muc where id = '".$values['id_dm']."'");?>
                                             <div class="row product-layout-list">
                                                 <div class="col-lg-3 col-md-5 ">
                                                     <div class="product-image">
-                                                        <a href="?ctrl=Product<?php echo '&m='.$data_m['id'].'&id='.$values['id'] ?>">
-                                                            <img src="public/Upload/Products/<?php echo $values['Anh'] ?>"
+                                                        <a href="?ctrl=Product<?php echo '&id='.$values['id'] ?>">
+                                                            <img src="public/Upload/Products/<?php echo $values['anh'] ?>"
                                                                 alt="Li's Product Image">
                                                         </a>
-                                                        <?php if($values['Sale'] > 0){ ?>
-                                                            <span class="sticker" style="background: #ff3d00;" >-<?php echo $values['Sale']."%" ?></span>
-                                                        <?php } ?>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-5 col-md-7">
@@ -156,43 +140,40 @@
                                                         <div class="product_desc_info">
                                                             <div class="product-review">
                                                                 <h5 class="manufacturer">
-                                                                    <a href="?ctrl=Product_List&act=sp&dm=<?php echo $dm['Ma_DM'] ?>"><?php echo $dm['Ten_DM'] ?></a>
+                                                                    <a href="?ctrl=Product_List&act=sp&dm=<?php echo $dm['id'] ?>"><?php echo $dm['ten_dm'] ?></a>
                                                                 </h5>
                                                                 <div class="rating-box">
                                                                     <ul class="rating">
-                                                                        <li <?php echo $values['Danh_Gia'] >=1 ? '' : 'class="no-star"' ?> ><i class="fa fa-star-o"></i></li>
-                                                                        <li <?php echo $values['Danh_Gia'] >=2 ? '' : 'class="no-star"' ?> ><i class="fa fa-star-o"></i></li>
-                                                                        <li <?php echo $values['Danh_Gia'] >=3 ? '' : 'class="no-star"' ?> ><i class="fa fa-star-o"></i></li>
-                                                                        <li <?php echo $values['Danh_Gia'] >=4 ? '' : 'class="no-star"' ?> ><i class="fa fa-star-o"></i>
+                                                                        <li <?php echo $values['diem_danh_gia'] >=1 ? '' : 'class="no-star"' ?> ><i class="fa fa-star-o"></i></li>
+                                                                        <li <?php echo $values['diem_danh_gia'] >=2 ? '' : 'class="no-star"' ?> ><i class="fa fa-star-o"></i></li>
+                                                                        <li <?php echo $values['diem_danh_gia'] >=3 ? '' : 'class="no-star"' ?> ><i class="fa fa-star-o"></i></li>
+                                                                        <li <?php echo $values['diem_danh_gia'] >=4 ? '' : 'class="no-star"' ?> ><i class="fa fa-star-o"></i>
                                                                         </li>
-                                                                        <li <?php echo $values['Danh_Gia'] >=5 ? '' : 'class="no-star"' ?> ><i class="fa fa-star-o"></i>
+                                                                        <li <?php echo $values['diem_danh_gia'] >=5 ? '' : 'class="no-star"' ?> ><i class="fa fa-star-o"></i>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
                                                             </div>
                                                             <h4><a class="product_name"
-                                                                    href="?ctrl=Product<?php echo '&m='.$data_m['id'].'&id='.$values['id'] ?>"><?php echo $values['Ten_SP'] ?></a></h4>
+                                                                    href="?ctrl=Product<?php echo '&id='.$values['id'] ?>"><?php echo $values['ten_sp'] ?></a></h4>
                                                             <div class="price-box">
-                                                                <?php if($values['Sale']>0){ ?>
                                                                 <div class="price-box">
-                                                                    <span style="text-decoration: line-through;"><?php echo currency_format($values['Gia']) ?></span>
-                                                                    <span class="new-price" style="color: #ff3d00;"><?php echo currency_format($values['Gia_Giam']) ?></span>
+                                                                    <span class="new-price"><?php echo currency_format($values['gia']) ?></span>
                                                                 </div>
-                                                                <?php } ?>
-                                                                <?php if($values['Sale']==0){ ?>
-                                                                <div class="price-box">
-                                                                    <span class="new-price"><?php echo currency_format($values['Gia']) ?></span>
-                                                                </div>
-                                                                <?php } ?>
                                                             </div>
-                                                            
+                                                            <div class="product-desc">
+                                                                <p>
+                                                                    <span class="short-text"><?= $values['mo_ta_ngan'] ?>
+                                                                    </span>
+                                                                </p>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <div class="shop-add-action mb-xs-30">
                                                         <ul class="add-actions-link">
-                                                            <li class="add-cart"><a href="?ctrl=Product_List&act=add&dm=gio_hang&dm=gio_hang<?php echo '&m='.$data_m['id'].'&id='.$values['id'] ?>">Thêm vào giỏ</a></li>
+                                                            <li class="add-cart"><a href="?ctrl=Product_List&act=add&dm=gio_hang&dm=gio_hang<?php echo '&id='.$values['id'].'&loai='.$values['id_loai'] ?>">Thêm vào giỏ</a></li>
                                                             <li class="wishlist"><a href="?ctrl=Product_List&act=add&dm=gio_hang&dm=yeu_thich&id=<?php echo $values['id'] ?>"><i
                                                                         class="fa fa-heart-o"></i>Thêm vào yêu thích</a>
                                                             </li>
@@ -258,11 +239,12 @@
                             <!-- category-sub-menu start -->
                             <div class="category-sub-menu">
                                 <ul>
-                                    <?php foreach($data_dm as $val_dm){ ?>
-                                    <li class="has-sub"><a href="?ctrl=Product_List&act=sp&dm=<?php echo $val_dm['Ma_DM'] ?>"><?php echo $val_dm['Ten_DM'] ?></a>
+                                    <?php foreach($data_dm as $val_dm){
+                                        $data_th = $this->Model->fetch("select * from thuong_hieu where id_dm='".$val_dm['id']."'");?>
+                                    <li class="has-sub"><a href="?ctrl=Product_List&act=sp&dm=<?php echo $val_dm['id'] ?>"><?php echo $val_dm['ten_dm'] ?></a>
                                         <ul>
                                             <?php foreach($data_th as $val_th){ ?>
-                                            <li><a href="?ctrl=Product_List&act=sp&dm=<?php echo $val_dm['Ma_DM'] ?>&th=<?php echo $val_th['Ma_TH'] ?>" > <?php echo $val_th['Ten_TH'] ?></a></li>
+                                            <li><a href="?ctrl=Product_List&act=sp&dm=<?php echo $val_dm['id'] ?>&th=<?php echo $val_th['id'] ?>" > <?php echo $val_th['ten_th'] ?></a></li>
                                             <?php } ?>
                                         </ul>
                                     </li>
@@ -277,123 +259,3 @@
             </div>
         </div>
 
-        <?php foreach($data as $val) { 
-            $sp_img = $this->Model->fetchOne("select * from sp_image where id_SP = '".$val['id']."'");
-            $mau_sp = $this->Model->fetch("select * from sp_ton where id_SP = '".$val['id']."'");
-            ?>
-            <!-- Modal thông tin sản phẩm -->
-            <div class="modal fade modal-wrapper" id="exampleModalCenter<?php echo $val['id'] ?>">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            <div class="modal-inner-area row">
-                                <div class="col-lg-5 col-md-6 col-sm-6">
-
-                                <div class="product-details-left">
-                                        <div class="product-details-images slider-navigation-1">
-                                            <div class="lg-image">
-                                                <img src="public/Upload/Products/<?php echo $val['Anh'] ?>" alt="product image">
-                                            </div>
-                                            <?php if($sp_img['Anh0'] != null){ ?>
-                                            <div class="lg-image">
-                                                <img src="public/Upload/Products/<?php echo $sp_img['Anh0'] ?>" alt="product image">
-                                            </div>
-                                            <?php } ?>
-                                            <?php if($sp_img['Anh1'] != null){ ?>
-                                            <div class="lg-image">
-                                                <img src="public/Upload/Products/<?php echo $sp_img['Anh1'] ?>" alt="product image">
-                                            </div>
-                                            <?php } ?>
-                                            <?php if($sp_img['Anh2'] != null){ ?>
-                                            <div class="lg-image">
-                                                <img src="public/Upload/Products/<?php echo $sp_img['Anh2'] ?>" alt="product image">
-                                            </div>
-                                            <?php } ?>
-                                            <?php if($sp_img['Anh3'] != null){ ?>
-                                            <div class="lg-image">
-                                                <img src="public/Upload/Products/<?php echo $sp_img['Anh3'] ?>" alt="product image">
-                                            </div>
-                                            <?php } ?>
-                                            <?php if($sp_img['Anh4'] != null){ ?>
-                                            <div class="lg-image">
-                                                <img src="public/Upload/Products/<?php echo $sp_img['Anh4'] ?>" alt="product image">
-                                            </div>
-                                            <?php } ?>
-
-                                        
-                                            
-                                        </div>
-                                        <div class="product-details-thumbs slider-thumbs-1">
-                                            <div class="sm-image"><img src="public/Upload/Products/<?php echo $val['Anh'] ?>" alt="product image thumb"></div>
-                                            <?php if($sp_img['Anh0'] != null){ ?>
-                                                <div class="sm-image"><img src="public/Upload/Products/<?php echo $sp_img['Anh0'] ?>" alt="product image thumb"></div>
-                                            <?php } ?>
-
-                                            <?php if($sp_img['Anh1'] != null) { ?>
-                                                <div class="sm-image"><img src="public/Upload/Products/<?php echo $sp_img['Anh1'] ?>" alt="product image thumb"></div>
-                                            <?php } ?>
-
-                                            <?php if($sp_img['Anh2'] != null) { ?>
-                                                <div class="sm-image"><img src="public/Upload/Products/<?php echo $sp_img['Anh2'] ?>" alt="product image thumb"></div>
-                                            <?php } ?>
-
-                                            <?php if($sp_img['Anh3'] != null) { ?>
-                                                <div class="sm-image"><img src="public/Upload/Products/<?php echo $sp_img['Anh3'] ?>" alt="product image thumb"></div>
-                                            <?php } ?>
-
-                                            <?php if($sp_img['Anh4'] != null) { ?>
-                                                <div class="sm-image"><img src="public/Upload/Products/<?php echo $sp_img['Anh4'] ?>" alt="product image thumb"></div>
-                                            <?php } ?>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-7 col-md-6 col-sm-6">
-                                    <div class="product-details-view-content pt-60">
-                                        <div class="product-info">
-                                            <h2><?php echo $val['Ten_SP']."-".$val['Loai'] ?></h2>
-                                            <span class="product-details-ref">Mã: <?php echo $val['Ma_SP'] ?></span>
-
-                                            <div class="price-box pt-20">
-                                            <?php if($val['Sale'] > 0){ ?>
-                                                    <span class="Mới-price" style="text-decoration: line-through;"><?php echo currency_format($val['Gia']) ?></span>
-                                                    <span class="new-price" style="color: #ff3d00;"><?php echo currency_format($val['Gia_Giam']) ?></span>
-                                                <?php } ?>
-                                                <?php if($val['Sale'] == 0){ ?>
-                                                        <span class="new-price"><?php echo currency_format($val['Gia']) ?></span>
-                                                <?php } ?>
-                                            </div>
-                                            
-                                            <div class="product-variants">
-                                                <div class="produt-variants-size">
-                                                    
-                                                    <span></span>
-                                                    <select name="Mau" class="nice-select">
-                                                        <option value="0" title="Ngẫu nhiên" selected="selected">Màu Ngẫu nhiên</option>
-                                                        <?php foreach($mau_sp as $val_mau){ ?>
-                                                        <option value="<?php echo $val_mau['Ma_Mau'] ?>" title="<?php echo $val_mau['Ten_Mau'] ?>"><?php echo $val_mau['Ten_Mau'] ?></option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </div>
-                                                
-                                            </div>
-                                            
-                                            
-                                            <div class="single-add-to-cart">
-                                                <form action="" class="cart-quantity">
-                                                    <a href="?ctrl=Product<?php echo '&m='.$mau_sp[0]['id'].'&id='.$val['id'] ?>" class="add-to-cart" type="submit">Xem thêm</a>
-                                                </form>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php } ?>   

@@ -33,7 +33,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
 </head>
 
 <body>
@@ -53,12 +53,15 @@
                 <a class="navbar-brand" href="#">Dành cho quản trị viên</a>
             </div>
             <!-- Top Menu Items -->
-            <ul class="nav navbar-right top-nav">                             
+            <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> 
-                        <?php echo isset($_SESSION['account']) ? $_SESSION['name'] : "Admin" ?> 
+                        <?php echo isset($_SESSION['admin']) ? $_SESSION['admin']['ho_ten'] : "Admin" ?>
                     <b class="caret"></b></a>
                     <ul class="dropdown-menu">                       
+                        <li>
+                            <a href="index.php?act=contact"><i class="fa fa-fw fa-envelope"></i></i>Tin nhắn <?= $contact ?></a>
+                        </li>
                         <li>
                             <a href="index.php?act=logout"><i class="fa fa-fw fa-power-off"></i>Đăng xuất</a>
                         </li>
@@ -114,16 +117,13 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="javascript:0;" data-toggle="collapse" data-target="#user"><i class="fa fa-fw fa-user"></i> Tài khoản <i class="fa fa-fw fa-caret-down"></i></a>
+                        <a href="javascript:0;" data-toggle="collapse" data-target="#user"><i class="fa fa-fw fa-user"></i> Người dùng <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="user" class="collapse">
                             <li>
-                                <a href="index.php?ctrl=users/Position">Chức vụ</a>
+                                <a href="index.php?ctrl=users/Account">Danh sách quản trị</a>
                             </li>
                             <li>
-                                <a href="index.php?ctrl=users/Account">Danh sách</a>
-                            </li>
-                            <li>
-                                <a href="index.php?ctrl=users/Info">Thông tin tài khoản</a>
+                                <a href="index.php?ctrl=users/Info">Danh sách khách hàng</a>
                             </li>
                         </ul>
                     </li>

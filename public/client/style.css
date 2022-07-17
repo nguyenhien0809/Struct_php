@@ -1,10 +1,5 @@
 /*-----------------------------------------------------------------------------------
-		Template Name: limupa - Digital Products Store ECommerce Bootstrap 4 Template
-		Template URI: http://bootexperts.com
-		Description: This is digital products store html5 template for eCommerce websites, nice and clean design;
-		Author: HasTech
-		Author URI: 
-		Version: 1.0
+
 -----------------------------------------------------------------------------------
 		CSS INDEX
 		===================
@@ -1713,9 +1708,7 @@ textarea:focus {
 	text-align: left;
 	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-	transition: all 0.3s ease-in-out;
 }
-
 .setting {
 	min-width: 150px;
 }
@@ -2143,7 +2136,7 @@ textarea:focus {
 	color: #ffffff;
 }
 
-.hb-menu nav>ul>li>a::after {
+.hb-menu nav>ul>li.dropdown-holder>a::after {
 	content: "\f107";
 	position: absolute;
 	top: 8px;
@@ -2835,7 +2828,7 @@ textarea:focus {
 	background: #eef0f1;
 	border: 1px solid #e1e1e1;
 	transition: all 0.3s ease-in-out;
-	width: 120px;
+	width: 77%;
 }
 
 .add-actions-link li:hover {
@@ -3673,8 +3666,8 @@ textarea:focus {
 }
 
 .category-heading>h2>i {
-	float: ;
-	text-align: ;
+	/*float: ;*/
+	/*text-align: ;*/
 	float: right;
 	padding-right: 20px;
 	font-size: 12px;
@@ -6512,6 +6505,33 @@ span.required {
 	display: none;
 }
 
+label.error{
+	color:red;
+	font-size: 10px;
+}
+
+.short-text{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 4;
+	line-clamp: 4;
+	-webkit-box-orient: vertical;
+}
+
+#box-loading .box-loading-sub{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0.7;
+	background: #000;
+	z-index: 1030000;
+}
 /*----------------------------------------------------------------------------------------------------*/
 /*------------------------------------------> The End <-----------------------------------------------*/
 /*----------------------------------------------------------------------------------------------------*/

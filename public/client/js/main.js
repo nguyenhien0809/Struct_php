@@ -1,11 +1,5 @@
 /*--------------------------------------------------
-Template Name: limupa;
-Description: limupa - Digital Products Store ECommerce Bootstrap 4 Template;
-Template URI:;
-Author Name:HasTech;
-Author URI:;
-Version: 1;
-Note: main.js, All Default Scripting Languages For This Theme Included In This File.
+
 -----------------------------------------------------
 		CSS INDEX
 		================
@@ -531,6 +525,15 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
 /*----------------------------------------*/
     new WOW().init();
 })(jQuery);
+
+function toast(message){
+	$('#box-toast').fadeIn();
+	$('.toast-body').html(message)
+	$('#box-toast').delay(5000).fadeOut();
+}
+$('#btn-toast-close').click(function (){
+	$('#box-toast').delay(0).fadeOut();
+});
 /*----------------------------------------------------------------------------------------------------*/
 /*------------------------------------------> The End <-----------------------------------------------*/
 /*----------------------------------------------------------------------------------------------------*/

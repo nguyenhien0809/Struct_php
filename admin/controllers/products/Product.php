@@ -16,7 +16,20 @@
 
                 case 'search':
                     $sr = isset($_POST['search']) ? $_POST['search'] : "";
-                    $data = $this->Model->fetch("select * from san_pham where Ma_SP like '%$sr%'  OR Ten_SP like '%$sr%' order by id desc limit 25");
+                    $data = $this->Model->fetch("select * from san_pham where ma_sp like '%$sr%'  OR ten_sp like '%$sr%' order by id desc limit 25");
+                    break;
+                case 'add':
+                    $data_dm = $this->Model->fetch("select * from danh_muc ");
+                    $data_th = $this->Model->fetch("select * from thuong_hieu ");
+                    include "views/products/Add.php";
+                    break;
+                case 'edit':
+                    $data_dm = $this->Model->fetch("select * from danh_muc ");
+                    $data_th = $this->Model->fetch("select * from thuong_hieu ");
+                    $data = $this->Model->fetchOne("select * from san_pham where id = '$id'");
+                    $data_loai = $this->Model->fetch("select * from sp_loai where ma_sp = '".$data['ma_sp']."'");
+                    $data_img = $this->Model->fetch("select * from sp_images where ma_sp = '".$data['ma_sp']."'");
+                    include "views/products/Add.php";
                     break;
                 case 'select':
                     $sl = isset($_GET['sl']) ? $_GET['sl'] : "";
@@ -24,10 +37,11 @@
                     break;    
                 default:
                     $data = $this->Model->fetch("select * from san_pham order by id desc limit 25");
+                    include "views/products/Product.php";
                 break;
             }
 
-            include "views/products/Product.php";
+
             
         }
     }

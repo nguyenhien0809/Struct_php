@@ -3,26 +3,27 @@
         public function __construct(){
             parent::__construct();
             $act = isset($_GET['act']) ? $_GET['act'] : '' ;
-            $Ma_DM = isset($_GET['Ma_DM']) ? $_GET['Ma_DM'] : '' ;
+            $id = isset($_GET['id']) ? $_GET['id'] : '' ;
             $thong_bao ='';
             switch ($act) {
                 case 'add':
-                    $Ma_DM = isset($_POST['Ma_DM']) ? $_POST['Ma_DM'] :'';
-                    $Ten_DM = isset($_POST['Ten_DM']) ? $_POST['Ten_DM'] : '';
+                    $ma_dm = isset($_POST['ma_dm']) ? $_POST['ma_dm'] :'';
+                    $ten_dm = isset($_POST['ten_dm']) ? $_POST['ten_dm'] : '';
 
-                    $this->Model->execute("insert into danh_muc(Ma_DM,Ten_DM) values ('$Ma_DM','$Ten_DM')");
+                    $this->Model->execute("insert into danh_muc(ma_dm,ten_dm) values ('$ma_dm','$ten_dm')");
                     echo "<meta http-equiv='refresh' content='0; URL=index.php?ctrl=categorys/category'>";
                     break;
                 case 'edit':
-                    $record = $this->Model->fetchOne("select * from danh_muc where Ma_DM = '$Ma_DM'");
+                    $record = $this->Model->fetchOne("select * from danh_muc where id = '$id'");
                     break;
                 case 'do_edit':
-                    $Ten_DM = isset($_POST['Ten_DM']) ? $_POST['Ten_DM'] : '';
-                    $this->Model->execute("update danh_muc set Ten_DM = '$Ten_DM' where Ma_DM='$Ma_DM'");
+                    $ma_dm = isset($_POST['ma_dm']) ? $_POST['ma_dm'] :'';
+                    $ten_dm = isset($_POST['ten_dm']) ? $_POST['ten_dm'] : '';
+                    $this->Model->execute("update danh_muc set ma_dm='$ma_dm',ten_dm = '$ten_dm' where id = '$id'");
                     echo "<meta http-equiv='refresh' content='0; URL=index.php?ctrl=categorys/category'>";
                     break;
                 case 'delete':
-                    $this->Model->execute("delete from danh_muc where Ma_DM='$Ma_DM'");
+                    $this->Model->execute("delete from danh_muc where id='$id'");
                     echo "<meta http-equiv='refresh' content='0; URL=index.php?ctrl=categorys/category'>";
                     break;
             }
